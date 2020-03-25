@@ -227,7 +227,7 @@ export default {
     submitPassForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.editPassword.userId = this.userData.userId;
+          this.editPassword.userId = this.userData.userid;
           api.updateUserPassword(this.editPassword).then(
             res => {
               if (res.data == "100000") {

@@ -5,7 +5,8 @@
         <img src="../../../static/img/logo.png" />
       </div>
       <div class="header_head_right">
-        <div v-if="showme == false" class="header_head_right_box" style="justify-content: center">
+        <div v-if="showme == false" class="header_head_right_box">
+          <!-- <img width="50" height="50" src="../../../static/img/zhou.jpg" /> -->
           <div class="box_msg">
             <el-dropdown trigger="click" @command="toLogin">
               <span class="el-dropdown-link font-size">暂未登录,点击登录</span>

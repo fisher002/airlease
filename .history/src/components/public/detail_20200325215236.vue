@@ -47,7 +47,7 @@ export default {
   created() {},
   methods: {
     toLease(data) {
-      if(!sessionStorage.getItem('isLogin') || sessionStorage.getItem('isLogin') === 'false'){
+      if(sessionStorage.getItem('isLogin')){
         this.$message.error('未登录，不可以进行此操作');
         return;
       }

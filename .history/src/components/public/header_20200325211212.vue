@@ -5,10 +5,10 @@
         <img src="../../../static/img/logo.png" />
       </div>
       <div class="header_head_right">
-        <div v-if="showme == false" class="header_head_right_box" style="justify-content: center">
+        <div v-if="showme == false" class="header_head_right_box">
           <div class="box_msg">
             <el-dropdown trigger="click" @command="toLogin">
-              <span class="el-dropdown-link font-size">暂未登录,点击登录</span>
+              <span class="el-dropdown-link font-size" style="justify-content: center">暂未登录,点击登录</span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="login">立即登录</el-dropdown-item>
               </el-dropdown-menu>

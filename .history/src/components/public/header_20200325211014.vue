@@ -5,7 +5,7 @@
         <img src="../../../static/img/logo.png" />
       </div>
       <div class="header_head_right">
-        <div v-if="showme == false" class="header_head_right_box" style="justify-content: center">
+        <div v-if="showme == false" class="header_head_right_box">
           <div class="box_msg">
             <el-dropdown trigger="click" @command="toLogin">
               <span class="el-dropdown-link font-size">暂未登录,点击登录</span>
@@ -146,6 +146,7 @@ export default {
         margin-right: 45px;
         background: #e6f7f7;
         display: flex;
+        justify-content: center;
         img {
           border-radius: 50%;
         }

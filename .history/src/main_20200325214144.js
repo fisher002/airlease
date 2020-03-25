@@ -15,7 +15,7 @@ Vue.use(vueSession)
 // 路由拦截
 router.beforeEach((to, from, next) => {
   if (to.matched.some(res => res.meta.requireAuth)) { // 验证是否需要登陆
-    if (sessionStorage.getItem('isLogin') === 'true') { // 查询本地存储信息是否已经登陆
+    if (sessionStorage.getItem('isLogin') == true) { // 查询本地存储信息是否已经登陆
       next();
     } else {
       next({
