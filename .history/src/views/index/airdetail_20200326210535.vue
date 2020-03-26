@@ -34,6 +34,7 @@ export default {
       let airId = this.$route.query.airId;
       let data = { imglist: "", detaildata: "" };
       if (airId == null || airId == undefined) {
+        console.log("error,无imgIg");
         return;
       }
       let imgId = '002';

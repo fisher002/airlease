@@ -17,7 +17,7 @@
           <div class="message-content">{{datas.detaildata.airDescribe}}</div>
           <div class="message-content">{{datas.detaildata.airDescribe}}</div>
           <div class="message-content">{{'押金:'+datas.detaildata.airDeposit+'元 日租:'+datas.detaildata.airRent+'元/天'}}</div>
-          <div class="message-content">{{'Tips:'+datas.detaildata.airTips}}</div>
+          <div class="message-content">{{datas.detaildata.airTips}}</div>
           <div class="message-content">{{datas.detaildata.airDescribe}}</div>
           <div class="message-content">
             <el-button type="danger" @click="toLease(datas)" class="now-button" round>立即租赁</el-button>
@@ -48,7 +48,7 @@ export default {
   methods: {
     toLease(data) {
       if(!sessionStorage.getItem('isLogin') || sessionStorage.getItem('isLogin') === 'false'){
-        this.$message.error('未登录，无法进行此操作');
+        this.$message.error('未登录，不可以进行此操作');
         return;
       }
       console.log(data);

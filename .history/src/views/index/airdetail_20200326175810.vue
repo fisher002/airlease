@@ -14,7 +14,6 @@ import Header from "@/components/public/header";
 import detail from "@/components/public/detail";
 import imgs from "@/components/json/imgs";
 import dt from "@/components/json/details";
-import api from './indexUrl'
 
 export default {
   components: { Header, detail },
@@ -31,27 +30,22 @@ export default {
   methods: {
     // 识别空调信息
     checkAirMsg() {
-      let airId = this.$route.query.airId;
+      let imgId = this.$route.query.airId;
       let data = { imglist: "", detaildata: "" };
-      if (airId == null || airId == undefined) {
+      if (imgId == null || imgId == undefined) {
+        console.log("error,无imgIg");
         return;
       }
-      let imgId = '002';
       for (let i in imgs) {
         if (imgs[i].imgId == imgId) {
           data.imglist = imgs[i];
         }
       }
-      // this.details.forEach(de => {
-      //   if (de.messageId == imgId) {
-      //     data.detaildata = de;
-      //   }
-      // });
-      api.getAirByAirId({airId: airId}).then(res=>{
-        data.detaildata = res.data;
-      },res=>{
-        console.log('error');
-      })
+      this.details.forEach(de => {
+        if (de.messageId == imgId) {
+          data.detaildata = de;
+        }
+      });
       this.imgdata = data;
     }
   }

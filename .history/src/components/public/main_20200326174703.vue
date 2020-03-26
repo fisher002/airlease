@@ -8,19 +8,19 @@
       </el-carousel>
     </div>
     <div class="main-box-p">空调列表</div>
-    <div class="main-box-body" v-for="item in listdata" :key="item.airId">
+    <div class="main-box-body" v-for="item in listdata" :key="item.id">
       <img
-        @click="toDetail(item.airId)"
+        @click="toDetail(item.id)"
         style="width:100%"
         height="250"
-        :src="item.airPicture"
+        src="../../../static/img/timg.jpg"
       />
       <div class="body-footer">
-        <span class="footer-p">{{item.airType}}</span>
-        <span class="footer-p">{{item.airName}}</span>
+        <span class="footer-p">{{item.name}}</span>
+        <span class="footer-p">{{item.message}}</span>
         <el-button
           type="primary"
-          @click="toDetail(item.airId)"
+          @click="toDetail(item.id)"
           style="width:100%;border:none"
           plain
         >查看详情</el-button>
@@ -57,7 +57,7 @@ const images = [
 export default {
   data() {
     return {
-      listdata: '',
+      listdata: [...datas],
       imageData: [...images],
       params: {
         keyword: '',
@@ -69,19 +69,17 @@ export default {
     this.getAirsList(this.params);
   },
   methods: {
-    // 空调详情
     toDetail(res) {
       this.$router.push({
           path: "/airdetail",
           query: {
-            airId: res
+            id: res
           }
         });
     },
-    // 获取空调列表
     getAirsList(params) {
-      api.getAirList(params).then(res=>{
-        this.listdata = res.data;
+      api.getAirsList(params).then(res=>{
+        console.log(res);
       },res=>{
         console.log('error');
       });

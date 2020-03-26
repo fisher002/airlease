@@ -69,14 +69,14 @@ export default {
     this.getAirsList(this.params);
   },
   methods: {
-    // 空调详情
     toDetail(res) {
-      this.$router.push({
-          path: "/airdetail",
-          query: {
-            airId: res
-          }
-        });
+      console.log(res);
+      // this.$router.push({
+      //     path: "/airdetail",
+      //     query: {
+      //       airId: res
+      //     }
+      //   });
     },
     // 获取空调列表
     getAirsList(params) {
