@@ -14,11 +14,11 @@
       </div>
       <div class="detail-body-right">
         <div class="body-right-message">
-          <div class="message-content">{{datas.detaildata.airName}}</div>
           <div class="message-content">{{datas.detaildata.airDescribe}}</div>
-          <div class="message-content">{{'押金：'+datas.detaildata.airDeposit+'元/台 日租：'+datas.detaildata.airRent+'元/天'}}</div>
-          <div class="message-content">{{'Tips：'+datas.detaildata.airTips}}</div>
-          <div class="message-content">{{'库存：'+datas.detaildata.airStock}}</div>
+          <div class="message-content">{{datas.detaildata.airDescribe}}</div>
+          <div class="message-content">{{'押金:'+datas.detaildata.airDeposit+'元 日租:'+datas.detaildata.airRent+'元/天'}}</div>
+          <div class="message-content">{{'Tips:'+datas.detaildata.airTips}}</div>
+          <div class="message-content">{{datas.detaildata.airDescribe}}</div>
           <div class="message-content">
             <el-button type="danger" @click="toLease()" class="now-button" round>立即租赁</el-button>
           </div>
@@ -51,7 +51,7 @@ export default {
         this.$message.error('未登录，无法进行此操作');
         return;
       }
-      this.$emit("callback","ok");
+      this.$emit("callback","show");
     }
   }
 };

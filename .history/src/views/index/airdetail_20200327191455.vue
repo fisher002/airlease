@@ -142,7 +142,7 @@ export default {
         if (valid) {
           // 校验通过
           this.leaseData.airId = this.imgdata.detaildata.airId;
-          this.leaseData.airName = this.imgdata.detaildata.airName;
+          this.leaseData.airName = "美的";
           this.leaseData.userId = this.$session.get('user').userId;
           this.leaseData.username = this.$session.get('user').username;
           this.leaseData.leaseEditDate = new Date();
@@ -150,7 +150,6 @@ export default {
             if(res.data == '100000'){
               this.$message.success('提交成功');
               this.dialogShow = false;
-              this.resetForm();
               return;
             }
             this.$message.error('提交失败');

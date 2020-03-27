@@ -45,12 +45,24 @@ export default {
   data() {
     return {
       sideData: sidemenus,
-      type: "myMessage",
+      type: "myMessage"
     };
   },
   created() {
+    if (
+      this.$session.get("user") != undefined &&
+      this.$session.get("user") != null
+    ) {
+      console.log('用户已登录');
+    } else {
+      this.$router.go(-1);
+    }
   },
   methods: {
+    // 获取我的租赁列表
+    getLeaseInfoList() {
+      
+    },
     sendType(type) {
       this.type = type;
     }
@@ -64,7 +76,7 @@ export default {
   justify-content: center;
 }
 .info-box {
-  width: 56%;
+  width: 50%;
   margin-top: 8px;
   display: flex;
   .info-body-left {

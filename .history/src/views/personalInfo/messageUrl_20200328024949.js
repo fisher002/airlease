@@ -1,7 +1,6 @@
 import axios from 'axios'
 const baseUrl = "/api"
 const url = "/sk/user"
-const url2 = "/sk/air"
 
 export default {
     findUserById(param) {
@@ -28,7 +27,7 @@ export default {
     getInfoList(params) {
         return axios({
             method: 'get',
-            url: `${baseUrl}${url2}/lease/info`,
+            url: `${baseUrl}${url}/lease/info`,
             params: params
         })
     }

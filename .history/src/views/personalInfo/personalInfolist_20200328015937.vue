@@ -16,9 +16,10 @@
           <div v-if="type == 'myMessage'">
             <mymessage></mymessage>
           </div>
-          <div v-if="type == 'leased'">
+          <div v-else-if="type == 'leased'">
             <leaseinfo></leaseinfo>
           </div>
+          <div v-else-if="type == 'xxx'">{{type}}</div>
         </div>
       </div>
     </div>
@@ -38,6 +39,11 @@ const sidemenus = [
     menuName: "租赁记录",
     type: "leased",
     menuId: "00002"
+  },
+  {
+    menuName: "xxxxxxx",
+    type: "xxx",
+    menuId: "00003"
   }
 ];
 export default {
@@ -45,10 +51,18 @@ export default {
   data() {
     return {
       sideData: sidemenus,
-      type: "myMessage",
+      type: "myMessage"
     };
   },
   created() {
+    if (
+      this.$session.get("user") != undefined &&
+      this.$session.get("user") != null
+    ) {
+      console.log('用户已登录');
+    } else {
+      this.$router.go(-1);
+    }
   },
   methods: {
     sendType(type) {
@@ -64,7 +78,7 @@ export default {
   justify-content: center;
 }
 .info-box {
-  width: 56%;
+  width: 50%;
   margin-top: 8px;
   display: flex;
   .info-body-left {

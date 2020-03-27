@@ -70,7 +70,7 @@ export default {
         leaseNumber: "",
         leasePriceSum: "",
         leaseEditDate: "",
-        isDelete: "false"
+        isDelete: ""
       },
       rules: {
         startDate: [
@@ -141,22 +141,6 @@ export default {
       this.$refs[res].validate(valid => {
         if (valid) {
           // 校验通过
-          this.leaseData.airId = this.imgdata.detaildata.airId;
-          this.leaseData.airName = this.imgdata.detaildata.airName;
-          this.leaseData.userId = this.$session.get('user').userId;
-          this.leaseData.username = this.$session.get('user').username;
-          this.leaseData.leaseEditDate = new Date();
-          api.addLeaseInfo(this.leaseData).then(res=>{
-            if(res.data == '100000'){
-              this.$message.success('提交成功');
-              this.dialogShow = false;
-              this.resetForm();
-              return;
-            }
-            this.$message.error('提交失败');
-          },res=>{
-            this.$message.error('提交失败');
-          })
         }
       });
     },

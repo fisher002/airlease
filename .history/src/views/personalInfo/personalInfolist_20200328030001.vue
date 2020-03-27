@@ -64,7 +64,7 @@ export default {
   justify-content: center;
 }
 .info-box {
-  width: 56%;
+  width: 50%;
   margin-top: 8px;
   display: flex;
   .info-body-left {

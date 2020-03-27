@@ -11,7 +11,7 @@
       <el-form :model="leaseData" :rules="rules" ref="checkFor">
         <el-form-item label="开始租赁日期：" prop="startDate">
           <el-date-picker
-            type="date"
+            type="datetime"
             placeholder="选择开始日期"
             v-model="leaseData.leaseStartDate"
             style="width: 100%;"
@@ -19,28 +19,22 @@
         </el-form-item>
         <el-form-item label="结束租赁日期：" prop="endDate">
           <el-date-picker
-            type="date"
+            type="datetime"
             placeholder="选择结束日期"
             v-model="leaseData.leaseEndDate"
             style="width: 100%;"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="租赁数量：">
-          <el-input-number
-            v-model="leaseData.leaseNumber"
-            @change="calculationSum"
-            :min="0"
-            :max="1000"
-            label="描述文字"
-          ></el-input-number>
+          <el-input-number v-model="leaseData.leaseNumber" @change="calculationSum" :min="5" :max="1000" label="描述文字"></el-input-number>
         </el-form-item>
-        <el-form-item label="总计：">
+        <el-form-item label="总计：" prop="number">
           <span>{{leaseData.leasePriceSum ? leaseData.leasePriceSum : '0'+' 元'}}</span>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="submitForm('checkFor')">确认</el-button>
-        <el-button type="primary" @click="resetForm()">重 置</el-button>
+        <el-button type="primary" @click="resetForm('checkFor')">重 置</el-button>
       </div>
     </el-dialog>
   </el-container>
@@ -70,18 +64,18 @@ export default {
         leaseNumber: "",
         leasePriceSum: "",
         leaseEditDate: "",
-        isDelete: "false"
+        isDelete: ""
       },
       rules: {
         startDate: [
-          // { required: true, message: '请选择开始日期', trigger: 'change' }
+          { required: true, message: '请选择开始日期', trigger: 'blur' }
         ],
         endDate: [
-          // { required: true, message: '请选择结束日期', trigger: 'change' }
+          { required: true, message: '请选择结束日期', trigger: 'change' }
         ],
         number: [
-          { required: true, message: "租赁数量不能为空" },
-          { type: "number", message: "租赁数量必须为数字值" }
+          { required: true, message: '租赁数量不能为空'},
+          { type: 'number', message: '租赁数量必须为数字值'}
         ]
       }
     };
@@ -115,57 +109,23 @@ export default {
     },
     // 详情组件回调
     digShow(res) {
-      if (res === "ok") {
+      if(res === 'ok') {
         this.dialogShow = true;
       }
     },
     calculationSum(value) {
-      // 计算总价格
-      let start, end, day;
-      if (this.leaseData.leaseStartDate && this.leaseData.leaseEndDate) {
-        start = this.checkDay(this.leaseData.leaseStartDate);
-        end = this.checkDay(this.leaseData.leaseEndDate);
-        day = (end - start) / (24 * 60 * 60 * 1000);
-        if (value > 0) {
-          this.leaseData.leasePriceSum =
-            day * 4 + this.leaseData.leaseNumber * 2000;
-        }
-      }
-      return;
-    },
-    checkDay(res) {
-      let date = new Date(res);
-      return date.getTime();
+      
     },
     submitForm(res) {
       this.$refs[res].validate(valid => {
         if (valid) {
           // 校验通过
-          this.leaseData.airId = this.imgdata.detaildata.airId;
-          this.leaseData.airName = this.imgdata.detaildata.airName;
-          this.leaseData.userId = this.$session.get('user').userId;
-          this.leaseData.username = this.$session.get('user').username;
-          this.leaseData.leaseEditDate = new Date();
-          api.addLeaseInfo(this.leaseData).then(res=>{
-            if(res.data == '100000'){
-              this.$message.success('提交成功');
-              this.dialogShow = false;
-              this.resetForm();
-              return;
-            }
-            this.$message.error('提交失败');
-          },res=>{
-            this.$message.error('提交失败');
-          })
         }
       });
     },
-    resetForm() {
+    resetForm(res) {
       // 重置表单
-      this.leaseData.leaseStartDate = "";
-      this.leaseData.leaseEndDate = "";
-      this.leaseData.leaseNumber = 0;
-      this.leaseData.leasePriceSum = 0;
+      this.$refs[res].resetFields();
     }
   }
 };
