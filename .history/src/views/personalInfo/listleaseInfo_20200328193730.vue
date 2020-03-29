@@ -54,7 +54,7 @@
     </div>
     </div>
     <div v-if="showType == true">
-      <detailInfo :leaseId="leaseId" @goBack="callback"></detailInfo>
+      <detailInfo :detail="leaseId" @goBack="callback"></detailInfo>
     </div>
   </div>
 </template>

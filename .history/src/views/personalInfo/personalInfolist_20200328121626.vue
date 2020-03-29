@@ -35,7 +35,7 @@ const sidemenus = [
     menuId: "00001"
   },
   {
-    menuName: "我的租赁",
+    menuName: "租赁记录",
     type: "leased",
     menuId: "00002"
   }

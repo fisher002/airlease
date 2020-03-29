@@ -38,19 +38,5 @@ export default {
             url: `${baseUrl}${url2}/lease/delete`,
             params: param
         })
-    },
-    getLeaseInfo(param) {
-        return axios({
-            method: 'get',
-            url: `${baseUrl}${url2}/lease/find`,
-            params: param
-        })
-    },
-    updateLeaseInfo(params) {
-        return axios({
-            method: 'post',
-            url: `${baseUrl}${url2}/lease/edit`,
-            data: params
-        })
     }
 }

@@ -50,7 +50,7 @@ export default {
         return axios({
             method: 'post',
             url: `${baseUrl}${url2}/lease/edit`,
-            data: params
+            params: params
         })
     }
 }

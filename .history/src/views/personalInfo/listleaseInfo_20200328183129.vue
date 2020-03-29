@@ -41,7 +41,7 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
-            <el-button @click="toDetail(scope.row.leaseId)" type="text" size="small">查看</el-button>
+            <el-button @click="toDetail(scope.row)" type="text" size="small">查看</el-button>
             <el-button
               v-if="scope.row.leaseStatus == 'editing'"
               @click="toDelete(scope.row.leaseId)"
@@ -54,7 +54,7 @@
     </div>
     </div>
     <div v-if="showType == true">
-      <detailInfo :leaseId="leaseId" @goBack="callback"></detailInfo>
+      <detailInfo :detail="detailData" @goBack="callback"></detailInfo>
     </div>
   </div>
 </template>
@@ -73,7 +73,7 @@ export default {
         pageNumber: 0
       },
       showType: false,
-      leaseId: ''
+      detailData: ''
     };
   },
   created() {
@@ -104,7 +104,7 @@ export default {
     },
     toDetail(res) {
       this.showType = true;
-      this.leaseId = res;
+      this.detailData = res;
     },
     // 删除
     toDelete(res) {
@@ -137,11 +137,9 @@ export default {
         });
     },
     handleDelete() {},
-    // 查看回调
     callback (res) {
       if(res == 'back') {
         this.showType = false;
-        this.getLeaseInfoList();
       }
     },
     // 日期格式化

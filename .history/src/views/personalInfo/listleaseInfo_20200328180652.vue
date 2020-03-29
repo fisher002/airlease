@@ -1,6 +1,5 @@
 <template>
   <div class="table-box" v-if="infoData">
-    <div v-if="showType == false">
     <div class="box-top">
       <span>
         已选择
@@ -41,7 +40,7 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
-            <el-button @click="toDetail(scope.row.leaseId)" type="text" size="small">查看</el-button>
+            <el-button @click="toDetail(scope.row)" type="text" size="small">查看</el-button>
             <el-button
               v-if="scope.row.leaseStatus == 'editing'"
               @click="toDelete(scope.row.leaseId)"
@@ -52,17 +51,11 @@
         </el-table-column>
       </el-table>
     </div>
-    </div>
-    <div v-if="showType == true">
-      <detailInfo :leaseId="leaseId" @goBack="callback"></detailInfo>
-    </div>
   </div>
 </template>
 <script>
 import api from "./messageUrl";
-import detailInfo from './detailleaseInfo'
 export default {
-  components: {detailInfo},
   data() {
     return {
       infoData: "",
@@ -71,9 +64,7 @@ export default {
       params: {
         userId: "",
         pageNumber: 0
-      },
-      showType: false,
-      leaseId: ''
+      }
     };
   },
   created() {
@@ -103,10 +94,8 @@ export default {
       this.selectionData = val;
     },
     toDetail(res) {
-      this.showType = true;
-      this.leaseId = res;
+      //   console.log(res);
     },
-    // 删除
     toDelete(res) {
       this.$confirm("是否删除该条信息?", "提示", {
         confirmButtonText: "确定",
@@ -118,7 +107,6 @@ export default {
           api.delLeaseInfo({ leaseId: res }).then(
             res => {
               if (res.data == "100000") {
-                this.getLeaseInfoList();
                 this.$message.success("删除成功");
                 return;
               }
@@ -137,14 +125,6 @@ export default {
         });
     },
     handleDelete() {},
-    // 查看回调
-    callback (res) {
-      if(res == 'back') {
-        this.showType = false;
-        this.getLeaseInfoList();
-      }
-    },
-    // 日期格式化
     formatDate(res) {
       let date = new Date(res);
       let year = date.getFullYear(),

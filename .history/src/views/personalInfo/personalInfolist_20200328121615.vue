@@ -2,7 +2,7 @@
   <div>
     <headerV2></headerV2>
     <div class="center">
-      <div class="info-box" :style="{'width':type == 'myMessage' ? '50%' : '65%'}">
+      <div class="info-box" :style="{'width':type == 'myMessage' ? '50%' : '63%'}">
         <div v-if="sideData" class="info-body-left" :style="{'height':(sideData.length*50)+'px'}">
           <div
             class="info-left-menu"
@@ -35,7 +35,7 @@ const sidemenus = [
     menuId: "00001"
   },
   {
-    menuName: "我的租赁",
+    menuName: "租赁记录",
     type: "leased",
     menuId: "00002"
   }

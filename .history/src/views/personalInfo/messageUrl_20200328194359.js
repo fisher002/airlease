@@ -41,16 +41,9 @@ export default {
     },
     getLeaseInfo(param) {
         return axios({
-            method: 'get',
+            method: 'post',
             url: `${baseUrl}${url2}/lease/find`,
             params: param
-        })
-    },
-    updateLeaseInfo(params) {
-        return axios({
-            method: 'post',
-            url: `${baseUrl}${url2}/lease/edit`,
-            data: params
         })
     }
 }
