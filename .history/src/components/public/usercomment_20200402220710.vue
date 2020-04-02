@@ -58,11 +58,8 @@ export default {
       }
       api.getUserCommentList(this.params).then(res=>{
         if(res.data.code == "200") {
-          if(res.data.data.length <= 0){
-            this.remind = '没有更多了';
-          }
           if(type == 'mord') {
-            this.commentData.push(...res.data.data);
+            this.commentData.push(res.data.data);
             this.remind = '点击加载更多';
             return;
           }

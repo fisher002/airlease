@@ -3,17 +3,17 @@
     <div class="body-head">用户评价</div>
     <div class="body-comment-list">
       <div class="auto-scroll">
-        <div class="list-item" v-for="(item,index) in commentData" :key="index">
+        <div class="list-item" v-for="(item,index) in comments" :key="index">
           <div class="list-item-left">
-            <img :src="item.userMessage.headPiuture" />
+            <img :src="item.headImg" />
           </div>
           <div class="list-item-right">
-            <div class="right-name">{{item.userMessage.name}}</div>
-            <div class="right-content">{{item.userComment.commentContent}}</div>
-            <div class="right-time">{{formatDate(item.userComment.commentDate)}}</div>
+            <div class="right-name">{{item.name}}</div>
+            <div class="right-content">{{item.content}}</div>
+            <div class="right-time">{{item.comDate}}</div>
           </div>
         </div>
-        <div @click="toLoadMord()">{{remind}}</div>
+        <div>点击加载更多</div>
       </div>
     </div>
     <div class="body-send-btn">
@@ -26,67 +26,32 @@
 import api from '@/views/index/indexUrl'
 export default {
   name: "usercomment",
+  props: {
+    comments: ""
+  },
   data() {
     return {
       message: "",
-      commentData: [],
-      remind: '点击加载更多',
       data: {
         airId: '',
         userId: '',
         commentContent: '',
         commentDate: new Date(),
         isDelete: 'false'
-      },
-      params: {
-        airId: '',
-        pageNumber: 0
       }
     };
   },
-  created() {
-    if(this.$route.query.airId) {
-      this.getUserCommentList();
-    }
-  },
   methods: {
-    // 查询该空调的评论
-    getUserCommentList(type) {
-      this.params.airId = this.$route.query.airId;
-      if(type == 'mord') {
-        this.params.pageNumber++;
-      }
-      api.getUserCommentList(this.params).then(res=>{
-        if(res.data.code == "200") {
-          if(res.data.data.length <= 0){
-            this.remind = '没有更多了';
-          }
-          if(type == 'mord') {
-            this.commentData.push(...res.data.data);
-            this.remind = '点击加载更多';
-            return;
-          }
-          this.commentData = res.data.data;
-        }
-      },res=>{
-        this.$message.error(res.data.message);
-      })
-    },
-    // 加载更多
-    toLoadMord() {
-      if((this.commentData.length)%10 > 0) {
-        this.remind = '没有更多了';
-        return;
-      }
-      this.getUserCommentList('mord');
-    },
-    // 添加评论
     sendComment() {
+      console.log(this.$route.query)
       let user = this.$session.get('user');
-      if(!user) {
-        this.$message.error("未登录，不可评论！");
-        return;
-      }
+      let sendData = {
+        name: user.name,
+        userId: user.userId,
+        headImg: user.headPicture,
+        content: this.data.commentContent,
+        comDate: this.formatDate()
+      };
       if (this.data.commentContent == "") {
         this.$message.error("不可以发送空白内容！");
         return;
@@ -94,24 +59,20 @@ export default {
       this.data.airId = this.$route.query.airId;
       this.data.userId = user.userId;
       this.addComment(this.data);
+      this.comments.push(sendData);
+      this.data.commentContent = '';
     },
-    // 添加评论
     addComment(res) {
       if(res) {
         api.addUserComment(res).then(res=>{
-          if(res.data == '100000') {
-            this.$message.success('评论成功');
-            this.data.commentContent = '';
-            this.getUserCommentList('mord');
-          }
+          
         },res=>{
-          this.$message.error('评论失败')
+          this.$message.error('error')
         })
       }
     },
-    // 日期格式化
-    formatDate(res) {
-      let date = new Date(res);
+    formatDate() {
+      let date = new Date();
       let year = date.getFullYear(),
         mouth =
           date.getMonth() + 1 < 10

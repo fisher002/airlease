@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       message: "",
-      commentData: [],
+      commentData: "",
       remind: '点击加载更多',
       data: {
         airId: '',
@@ -51,21 +51,10 @@ export default {
   },
   methods: {
     // 查询该空调的评论
-    getUserCommentList(type) {
+    getUserCommentList() {
       this.params.airId = this.$route.query.airId;
-      if(type == 'mord') {
-        this.params.pageNumber++;
-      }
       api.getUserCommentList(this.params).then(res=>{
         if(res.data.code == "200") {
-          if(res.data.data.length <= 0){
-            this.remind = '没有更多了';
-          }
-          if(type == 'mord') {
-            this.commentData.push(...res.data.data);
-            this.remind = '点击加载更多';
-            return;
-          }
           this.commentData = res.data.data;
         }
       },res=>{
@@ -74,11 +63,19 @@ export default {
     },
     // 加载更多
     toLoadMord() {
-      if((this.commentData.length)%10 > 0) {
+      if(this.commentData.length < 10 || (this.commentData.length)%10 > 0) {
         this.remind = '没有更多了';
         return;
       }
-      this.getUserCommentList('mord');
+      this.pageNumber++;
+      api.getUserCommentList(this.params).then(res=>{
+        if(res.data.code == "200") {
+          this.commentData.concat(res.data.data);
+        }
+      },res=>{
+        this.$message.error(res.data.message);
+      })
+      this.remind = '点击加载更多';
     },
     // 添加评论
     sendComment() {
@@ -102,7 +99,7 @@ export default {
           if(res.data == '100000') {
             this.$message.success('评论成功');
             this.data.commentContent = '';
-            this.getUserCommentList('mord');
+            this.getUserCommentList();
           }
         },res=>{
           this.$message.error('评论失败')

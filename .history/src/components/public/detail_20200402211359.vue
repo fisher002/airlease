@@ -32,6 +32,7 @@
 </template>
 <script>
 import usercomment from './usercomment'
+import comments from '../json/comments'
 export default {
   components: {usercomment},
   name: "detail",

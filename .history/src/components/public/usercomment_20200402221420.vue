@@ -71,6 +71,9 @@ export default {
       },res=>{
         this.$message.error(res.data.message);
       })
+      if(this.commentData.length < 10) {
+        this.remind = '没有更多了';
+      }
     },
     // 加载更多
     toLoadMord() {

@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="body-right-comment">
-          <usercomment></usercomment>
+          <usercomment v-if="commentData" :comments="commentData"></usercomment>
         </div>
       </div>
     </div>
@@ -32,6 +32,7 @@
 </template>
 <script>
 import usercomment from './usercomment'
+import comments from '../json/comments'
 export default {
   components: {usercomment},
   name: "detail",
@@ -40,6 +41,7 @@ export default {
   },
   data() {
     return {
+      commentData: [...comments]
     };
   },
   created() {},

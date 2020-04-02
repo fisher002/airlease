@@ -30,12 +30,5 @@ export default {
             url: `${baseUrl}${url}/leasecomment/add`,
             data: params
         })
-    },
-    getUserCommentList(params) {
-        return axios({
-            method: 'POST',
-            url: `${baseUrl}${url}/leasecomment/list`,
-            params: params
-        })
     }
 }
