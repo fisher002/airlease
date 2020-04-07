@@ -12,8 +12,6 @@ import listuser from '@/views/admin/userManage/listuser'
 import detailuser from '@/views/admin/userManage/detailuser'
 import listair from '@/views/admin/airManage/listair'
 import detailair from '@/views/admin/airManage/detailair'
-import listairinfo from '@/views/admin/airinfoManage/listairinfo'
-import detailairinfo from '@/views/admin/airinfoManage/detailairinfo'
 import listairlease from '@/views/admin/airleaseManage/listairlease'
 import detailairlease from '@/views/admin/airleaseManage/detailairlease'
 
@@ -96,16 +94,6 @@ export default new Router({
           path: '/detailair',
           name: 'detailair',
           component: detailair
-        },
-        {
-          path: '/listairinfo',
-          name: 'listairinfo',
-          component: listairinfo
-        },
-        {
-          path: '/detailairinfo',
-          name: 'detailairinfo',
-          component: detailairinfo
         },
         {
           path: '/listairlease',

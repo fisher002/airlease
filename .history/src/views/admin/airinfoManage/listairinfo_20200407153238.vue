@@ -42,14 +42,29 @@
           <el-table-column type="selection" align="center" width="55"></el-table-column>
           <el-table-column type="index" align="center" label="序号" width="50"></el-table-column>
           <el-table-column prop="airName" align="center" sortable label="空调名" width="300"></el-table-column>
-          <el-table-column prop="airType" align="center" sortable label="空调类型" width="250"></el-table-column>
-          <el-table-column prop="airModel" align="center" sortable label="空调型号" width="300"></el-table-column>
-          <el-table-column prop="airPicture" align="center" sortable label="空调图片"></el-table-column>
+          <el-table-column prop="airDescribe" align="center" sortable label="空调描述" width="250"></el-table-column>
+          <el-table-column prop="airTips" align="center" sortable label="提示" width="300"></el-table-column>
+          <el-table-column prop="airRent" align="center" sortable label="租金" width="100">
+            <template slot-scope="scope">
+              <span>{{ scope.row.airRent + ' 元/天' }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="airDeposit" align="center" sortable label="押金" width="100">
+            <template slot-scope="scope">
+              <span>{{ scope.row.airDeposit + ' 元/台' }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="airStock" align="center" sortable label="库存"></el-table-column>
+          <el-table-column prop="airPutDate" align="center" sortable label="入库时间" width="150">
+            <template slot-scope="scope">
+              <span>{{ formatDate(scope.row.airPutDate) }}</span>
+            </template>
+          </el-table-column>
           <el-table-column fixed="right" label="操作" min-width="20">
             <template slot-scope="scope">
-              <el-button @click="toDetail(scope.row.airId,'detail')" type="text" size="small">查看</el-button>
+              <el-button @click="toDetail(scope.row.airDetailId,'detail')" type="text" size="small">查看</el-button>
               <el-button
-                @click="toDelete(scope.row.airId)"
+                @click="toDelete(scope.row.airDetailId)"
                 type="text"
                 size="small"
                 style="color:red"
@@ -71,7 +86,7 @@
   </div>
 </template>
 <script>
-import api from "./airleaseUrl";
+import api from "./airinfoUrl";
 export default {
   components: {},
   data() {
@@ -87,13 +102,13 @@ export default {
     };
   },
   created() {
-    this.getAirLeaseList();
+    this.getAirInfoList();
   },
   methods: {
     // 获取列表
-    getAirLeaseList() {
+    getAirInfoList() {
       this.loading = true;
-      api.getAirLeaseList(this.params).then(
+      api.getAirInfoList(this.params).then(
         res => {
           if (res.data.code == 200) {
             this.loading = false;
@@ -111,7 +126,7 @@ export default {
       );
     },
     search() {
-      this.getAirLeaseList();
+      this.getAirInfoList();
     },
     // 选中返回值
     handleSelectionChange(val) {
@@ -119,9 +134,9 @@ export default {
     },
     toDetail(res, type) {
       this.$router.push({
-        path: "/detailairlease",
+        path: "/detailairinfo",
         query: {
-          airId: res,
+          airDetailId: res,
           type: type
         }
       });
@@ -136,7 +151,7 @@ export default {
       if (this.selectionData.length > 0) {
         let ids = [];
         this.selectionData.forEach(e => {
-          ids.push(e.airId);
+          ids.push(e.airDetailId);
         });
         this.submitDel(ids);
       }
@@ -150,11 +165,11 @@ export default {
         center: true
       })
         .then(() => {
-          api.deleteAir(res).then(
+          api.deleteAirInfo(res).then(
             res => {
               if (res.data.code == 200) {
                 this.$message.success(res.data.message);
-                this.getAirLeaseList();
+                this.getAirInfoList();
                 return;
               }
               this.$message.error(res.data.message);
@@ -177,7 +192,7 @@ export default {
         return;
       }
       this.params.pageNumber = res - 1;
-      this.getAirLeaseList();
+      this.getAirInfoList();
     },
     // 日期格式化
     formatDate(res) {

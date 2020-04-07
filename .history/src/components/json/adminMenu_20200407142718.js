@@ -15,7 +15,7 @@ export default[
         isIndex: false
     },
     {
-        path: '/listairinfo',
+        path: '/listairdetail',
         label: '空调详情管理',
         isIndex: false
     },
