@@ -38,7 +38,7 @@ export default {
     },
     getAllAirs(params) {
         return axios({
-            method: 'post',
+            method: 'get',
             url: `${baseUrl}${url}/airinfo/airs`,
             data: params
         })

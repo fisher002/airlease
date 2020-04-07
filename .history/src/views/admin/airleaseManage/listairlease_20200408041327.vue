@@ -57,7 +57,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="leaseNumber" align="center" sortable label="租赁空调台数" width="150"></el-table-column>
-          <el-table-column prop="leasePriceSum" align="center" sortable label="总价格" width="150"></el-table-column>
+          <el-table-column prop="leasePriceSum" align="center" sortable label="总价格" width="100"></el-table-column>
           <el-table-column prop="leaseEditDate" align="center" sortable label="操作时间" width="200">
             <template slot-scope="scope">
               <span>{{ formatDate(scope.row.leaseEditDate) }}</span>

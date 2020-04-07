@@ -23,7 +23,6 @@
                 type="date"
                 placeholder="选择日期"
                 clearable
-                @change="calculationSum"
                 v-model="data.leaseStartDate"
               ></el-date-picker>
             </el-form-item>
@@ -37,7 +36,6 @@
                 type="date"
                 placeholder="选择日期"
                 clearable
-                @change="calculationSum"
                 v-model="data.leaseEndDate"
               ></el-date-picker>
             </el-form-item>
@@ -68,6 +66,9 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
+        </el-form-item>
+        <el-form-item label="租赁状态" prop="leaseStatus">
+          <el-input v-model="data.leaseStatus" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item style="float:left">
           <el-button type="primary" @click="submitForm('checkFor')">立即添加</el-button>
@@ -105,7 +106,6 @@
                 type="date"
                 placeholder="选择日期"
                 clearable
-                @change="calculationSum"
                 v-model="data.leaseStartDate"
               ></el-date-picker>
             </el-form-item>
@@ -120,7 +120,6 @@
                 type="date"
                 placeholder="选择日期"
                 clearable
-                @change="calculationSum"
                 v-model="data.leaseEndDate"
               ></el-date-picker>
             </el-form-item>
@@ -158,10 +157,10 @@
           </el-col>
         </el-form-item>
         <el-form-item label="租赁状态" prop="leaseStatus">
-          <span v-if="isShowEdit == false">{{data.leaseStatus == 'editing' ? '未处理' : '已处理'}}</span>
+          <span v-if="isShowEdit == false">{{data.leaseStatus == 'editing' ? '审核中' : '可用'}}</span>
           <el-select v-else style="float:left" v-model="data.leaseStatus" placeholder="请选择状态">
-            <el-option label="未处理" value="editing"></el-option>
-            <el-option label="已处理" value="available"></el-option>
+            <el-option label="审核中" value="editing"></el-option>
+            <el-option label="可用" value="available"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item style="float:left">

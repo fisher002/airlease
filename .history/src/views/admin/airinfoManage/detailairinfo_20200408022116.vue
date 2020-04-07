@@ -135,7 +135,7 @@ export default {
         isDelete: "false"
       },
       params: {
-        airDetailId: "",
+        airId: "",
         type: ""
       },
       rules: {

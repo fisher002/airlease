@@ -76,11 +76,11 @@
         </el-form-item>
         <el-form-item label="空调租金" prop="airRent">
           <span v-if="isShowEdit == false">{{data.airRent + ' 元/天'}}</span>
-          <el-input v-else v-model.number="data.airRent" class="input-width" clearable></el-input>
+          <el-input v-else v-model="data.airRent" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="空调押金" prop="airDeposit">
           <span v-if="isShowEdit == false">{{data.airDeposit + ' 元/台'}}</span>
-          <el-input v-else v-model.number="data.airDeposit" class="input-width" clearable></el-input>
+          <el-input v-else v-model="data.airDeposit" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="空调提示" prop="airTips">
           <span v-if="isShowEdit == false">{{data.airTips}}</span>
@@ -88,7 +88,7 @@
         </el-form-item>
         <el-form-item label="库存" prop="airStock">
           <span v-if="isShowEdit == false">{{data.airStock}}</span>
-          <el-input v-else v-model.number="data.airStock" class="input-width" clearable></el-input>
+          <el-input v-else v-model="data.airStock" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="入库时间" prop="airPutDate">
           <span v-if="isShowEdit == false">{{formatDate(data.airPutDate)}}</span>
@@ -135,7 +135,7 @@ export default {
         isDelete: "false"
       },
       params: {
-        airDetailId: "",
+        airId: "",
         type: ""
       },
       rules: {
@@ -144,7 +144,7 @@ export default {
         ],
         airName: [
           { required: true, message: "空调名不能为空", trigger: "blur" },
-          { min: 1, max: 100, message: "长度在 1 到 100 个字符", trigger: "blur" }
+          { min: 1, max: 50, message: "长度在 1 到 50 个字符", trigger: "blur" }
         ],
         airRent: [
           { required: true, message: "租金不能为空", trigger: "blur" },
@@ -160,7 +160,7 @@ export default {
         ],
         airDescribe: [
           { required: true, message: "描述不能为空", trigger: "blur" },
-          { min: 1, max: 200, message: "长度在 1 到 200 个字符", trigger: "blur" }
+          { min: 1, max: 100, message: "长度在 1 到 100 个字符", trigger: "blur" }
         ],
         airStock: [
           { required: true, message: "库存不能为空", trigger: "blur" },

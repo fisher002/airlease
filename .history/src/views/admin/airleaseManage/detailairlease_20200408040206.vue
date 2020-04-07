@@ -23,7 +23,6 @@
                 type="date"
                 placeholder="选择日期"
                 clearable
-                @change="calculationSum"
                 v-model="data.leaseStartDate"
               ></el-date-picker>
             </el-form-item>
@@ -37,21 +36,13 @@
                 type="date"
                 placeholder="选择日期"
                 clearable
-                @change="calculationSum"
                 v-model="data.leaseEndDate"
               ></el-date-picker>
             </el-form-item>
           </el-col>
         </el-form-item>
         <el-form-item label="租赁数量" prop="leaseNumber">
-          <el-input-number
-            v-model="data.leaseNumber"
-            @change="calculationSum"
-            :min="0"
-            :max="1000"
-            label="描述文字"
-            style="float:left"
-          ></el-input-number>
+          <el-input v-model="data.leaseNumber" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="租赁总和" prop="leasePriceSum">
           <el-input v-model="data.leasePriceSum" class="input-width" clearable></el-input>
@@ -68,6 +59,9 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
+        </el-form-item>
+        <el-form-item label="租赁状态" prop="leaseStatus">
+          <el-input v-model="data.leaseStatus" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item style="float:left">
           <el-button type="primary" @click="submitForm('checkFor')">立即添加</el-button>
@@ -105,7 +99,6 @@
                 type="date"
                 placeholder="选择日期"
                 clearable
-                @change="calculationSum"
                 v-model="data.leaseStartDate"
               ></el-date-picker>
             </el-form-item>
@@ -120,7 +113,6 @@
                 type="date"
                 placeholder="选择日期"
                 clearable
-                @change="calculationSum"
                 v-model="data.leaseEndDate"
               ></el-date-picker>
             </el-form-item>
@@ -128,15 +120,7 @@
         </el-form-item>
         <el-form-item label="租赁数量" prop="leaseNumber">
           <span v-if="isShowEdit == false">{{data.leaseNumber}}</span>
-          <el-input-number
-            v-else
-            style="float:left"
-            v-model="data.leaseNumber"
-            @change="calculationSum"
-            :min="0"
-            :max="1000"
-            label="描述文字"
-          ></el-input-number>
+          <el-input v-else v-model="data.leaseNumber" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="租赁总和" prop="leasePriceSum">
           <span v-if="isShowEdit == false">{{data.leasePriceSum}}</span>
@@ -158,11 +142,8 @@
           </el-col>
         </el-form-item>
         <el-form-item label="租赁状态" prop="leaseStatus">
-          <span v-if="isShowEdit == false">{{data.leaseStatus == 'editing' ? '未处理' : '已处理'}}</span>
-          <el-select v-else style="float:left" v-model="data.leaseStatus" placeholder="请选择状态">
-            <el-option label="未处理" value="editing"></el-option>
-            <el-option label="已处理" value="available"></el-option>
-          </el-select>
+          <span v-if="isShowEdit == false">{{data.leaseStatus == 'editing' ? '审核中' : '可用'}}</span>
+          <el-input v-else v-model="data.leaseStatus" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item style="float:left">
           <el-button v-show="isShowEdit" type="primary" @click="submitForm('checkFor')">保存</el-button>
@@ -273,23 +254,6 @@ export default {
       if (this.isShowEdit == false) {
         this.getAirLeaseById();
       }
-    },
-    calculationSum(value) {
-      // 计算总价格
-      let start, end, day;
-      if (this.data.leaseStartDate && this.data.leaseEndDate) {
-        start = this.checkDay(this.data.leaseStartDate);
-        end = this.checkDay(this.data.leaseEndDate);
-        day = (end - start) / (24 * 60 * 60 * 1000);
-        if (value > 0) {
-          this.data.leasePriceSum = day * 4 + this.data.leaseNumber * 2000;
-        }
-      }
-      return;
-    },
-    checkDay(res) {
-      let date = new Date(res);
-      return date.getTime();
     },
     // 日期格式化
     formatDate(res) {

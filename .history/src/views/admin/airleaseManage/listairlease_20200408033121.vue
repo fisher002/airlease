@@ -4,7 +4,6 @@
       <div class="box-top">
         <div class="top-left">
           <el-input placeholder="请输入空调名" v-model="params.airName" clearable></el-input>
-          <div style="width:10px"></div>
           <el-input placeholder="请输入租赁人姓名" v-model="params.username" clearable></el-input>
           <div style="width:10px"></div>
           <el-button type="primary" icon="el-icon-search" @click="search()">查询</el-button>
@@ -28,7 +27,6 @@
             type="primary"
             icon="el-icon-circle-plus-outline"
             @click="toDetail(0,'add')"
-            disabled
           >新增</el-button>
         </div>
       </div>
@@ -45,7 +43,7 @@
           <el-table-column type="selection" align="center" width="55"></el-table-column>
           <el-table-column type="index" align="center" label="序号" width="50"></el-table-column>
           <el-table-column prop="airName" align="center" sortable label="空调名" width="350"></el-table-column>
-          <el-table-column prop="username" align="center" sortable label="租赁人" width="150"></el-table-column>
+          <el-table-column prop="username" align="center" sortable label="租赁人姓名" width="150"></el-table-column>
           <el-table-column prop="leaseStartDate" align="center" sortable label="租赁开始时间" width="200">
             <template slot-scope="scope">
               <span>{{ formatDate(scope.row.leaseStartDate) }}</span>
@@ -57,19 +55,13 @@
             </template>
           </el-table-column>
           <el-table-column prop="leaseNumber" align="center" sortable label="租赁空调台数" width="150"></el-table-column>
-          <el-table-column prop="leasePriceSum" align="center" sortable label="总价格" width="150"></el-table-column>
+          <el-table-column prop="leasePriceSum" align="center" sortable label="总价格" width="100"></el-table-column>
           <el-table-column prop="leaseEditDate" align="center" sortable label="操作时间" width="200">
             <template slot-scope="scope">
               <span>{{ formatDate(scope.row.leaseEditDate) }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="leaseStatus" align="center" sortable label="租赁状态" width="250">
-            <template slot-scope="scope">
-              <span
-                :style="{'color':scope.row.leaseStatus == 'editing' ? 'red' : '#1fca1f'}"
-              >{{ scope.row.leaseStatus == 'editing' ? '未处理' : '已处理' }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column prop="leaseStatus" align="center" sortable label="租赁状态" width="250"></el-table-column>
           <el-table-column fixed="right" label="操作" min-width="20">
             <template slot-scope="scope">
               <el-button @click="toDetail(scope.row.leaseId,'detail')" type="text" size="small">查看</el-button>
@@ -176,7 +168,7 @@ export default {
         center: true
       })
         .then(() => {
-          api.deleteAirLease(res).then(
+          api.deleteAir(res).then(
             res => {
               if (res.data.code == 200) {
                 this.$message.success(res.data.message);

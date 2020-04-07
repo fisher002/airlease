@@ -135,7 +135,7 @@ export default {
         isDelete: "false"
       },
       params: {
-        airDetailId: "",
+        airId: "",
         type: ""
       },
       rules: {
@@ -144,7 +144,7 @@ export default {
         ],
         airName: [
           { required: true, message: "空调名不能为空", trigger: "blur" },
-          { min: 1, max: 100, message: "长度在 1 到 100 个字符", trigger: "blur" }
+          { min: 1, max: 50, message: "长度在 1 到 50 个字符", trigger: "blur" }
         ],
         airRent: [
           { required: true, message: "租金不能为空", trigger: "blur" },
@@ -160,7 +160,7 @@ export default {
         ],
         airDescribe: [
           { required: true, message: "描述不能为空", trigger: "blur" },
-          { min: 1, max: 200, message: "长度在 1 到 200 个字符", trigger: "blur" }
+          { min: 1, max: 100, message: "长度在 1 到 100 个字符", trigger: "blur" }
         ],
         airStock: [
           { required: true, message: "库存不能为空", trigger: "blur" },

@@ -9,30 +9,23 @@
         class="demo-ruleForm center"
         label-position="left"
       >
-        <el-form-item label="对应空调" prop="airId">
-          <el-select class="select-width" v-model="data.airId" clearable placeholder="请选择">
-            <el-option
-              v-for="item in airs"
-              :key="item.airId"
-              :label="item.airName"
-              :value="item.airId"
-            ></el-option>
-          </el-select>
+        <el-form-item label="空调名" prop="airName">
+          <el-input v-model="data.airName" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="空调描述" prop="airDescribe">
           <el-input type="textarea" v-model="data.airDescribe" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="空调租金" prop="airRent">
-          <el-input v-model.number="data.airRent" class="input-width" clearable></el-input>
+          <el-input v-model="data.airRent" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="空调押金" prop="airDeposit">
-          <el-input v-model.number="data.airDeposit" class="input-width" clearable></el-input>
+          <el-input v-model="data.airRent" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="空调提示" prop="airTips">
           <el-input v-model="data.airTips" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="库存" prop="airStock">
-          <el-input v-model.number="data.airStock" class="input-width" clearable></el-input>
+          <el-input v-model="data.airStock" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="入库时间" prop="airPutDate">
           <el-col :span="11">
@@ -76,11 +69,11 @@
         </el-form-item>
         <el-form-item label="空调租金" prop="airRent">
           <span v-if="isShowEdit == false">{{data.airRent + ' 元/天'}}</span>
-          <el-input v-else v-model.number="data.airRent" class="input-width" clearable></el-input>
+          <el-input v-else v-model="data.airRent" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="空调押金" prop="airDeposit">
           <span v-if="isShowEdit == false">{{data.airDeposit + ' 元/台'}}</span>
-          <el-input v-else v-model.number="data.airDeposit" class="input-width" clearable></el-input>
+          <el-input v-else v-model="data.airDeposit" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="空调提示" prop="airTips">
           <span v-if="isShowEdit == false">{{data.airTips}}</span>
@@ -88,7 +81,7 @@
         </el-form-item>
         <el-form-item label="库存" prop="airStock">
           <span v-if="isShowEdit == false">{{data.airStock}}</span>
-          <el-input v-else v-model.number="data.airStock" class="input-width" clearable></el-input>
+          <el-input v-else v-model="data.airStock" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="入库时间" prop="airPutDate">
           <span v-if="isShowEdit == false">{{formatDate(data.airPutDate)}}</span>
@@ -124,7 +117,6 @@ export default {
       airIds: [],
       airs: "",
       data: {
-        airId: "",
         airName: "",
         airDescribe: "",
         airTips: "",
@@ -135,37 +127,14 @@ export default {
         isDelete: "false"
       },
       params: {
-        airDetailId: "",
+        airId: "",
         type: ""
       },
       rules: {
-        airId: [
-          { required: true, message: "请选择一个空调", trigger: "blur" }
-        ],
         airName: [
           { required: true, message: "空调名不能为空", trigger: "blur" },
-          { min: 1, max: 100, message: "长度在 1 到 100 个字符", trigger: "blur" }
-        ],
-        airRent: [
-          { required: true, message: "租金不能为空", trigger: "blur" },
-          { type: "number", message: "租金必须为数字", trigger: "blur" }
-        ],
-        airDeposit: [
-          { required: true, message: "押金不能为空", trigger: "blur" },
-          { type: "number", message: "押金必须为数字", trigger: "blur" }
-        ],
-        airTips: [
-          { required: true, message: "提示不能为空", trigger: "blur" },
           { min: 1, max: 50, message: "长度在 1 到 50 个字符", trigger: "blur" }
-        ],
-        airDescribe: [
-          { required: true, message: "描述不能为空", trigger: "blur" },
-          { min: 1, max: 200, message: "长度在 1 到 200 个字符", trigger: "blur" }
-        ],
-        airStock: [
-          { required: true, message: "库存不能为空", trigger: "blur" },
-          { type: "number", message: "库存必须为数字", trigger: "blur" }
-        ],
+        ]
       }
     };
   },
@@ -202,14 +171,6 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           // 校验通过
-          if(this.params.type == 'add') {
-            this.airs.forEach(e => {
-              if(e.airId === this.data.airId) {
-                this.data.airName = e.airName;
-                return;
-              }
-            })
-          }
           api.updateAirInfo(this.data).then(
             res => {
               if (res.data.code == 200) {
@@ -250,7 +211,7 @@ export default {
     },
     // 获取空调ids
     getAirIds() {
-      if (this.params.type != "add") {
+      if(this.params.type != 'add') {
         return;
       }
       api.getAirIds().then(res => {
@@ -266,7 +227,7 @@ export default {
       });
     },
     setAirIds() {
-      if (this.params.type != "add") {
+      if(this.params.type != 'add') {
         return;
       }
       this.airIds = [];
@@ -277,16 +238,15 @@ export default {
           }
           this.airIds.push(e);
         });
-        this.getAllAirs(this.airIds);
       }
-    },
-    // 获取上级
-    getAllAirs(res) {
-      api.getAllAirs(res).then(res => {
-        if (res.data.code == 200) {
-          this.airs = res.data.data;
-        }
-      });
+      获取上级
+      if(this.airIds) {
+        api.getAllAirs(this.airIds).then(res=>{
+          if(res.data.code == 200) {
+            this.airs = res.data.data;
+          }
+        })
+      }
     },
     // 日期格式化
     formatDate(res) {
@@ -314,10 +274,6 @@ export default {
 }
 .input-width {
   width: 30%;
-  float: left;
-}
-.select-width {
-  width: 15%;
   float: left;
 }
 .cancel-width {
