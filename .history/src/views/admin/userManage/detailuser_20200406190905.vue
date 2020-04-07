@@ -34,18 +34,10 @@
           <el-input v-model="data.tellphone" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="QQ" prop="qq">
-          <el-input
-            v-model.number="data.qq"
-            class="input-width"
-            @input="emailCheck(data.qq)"
-            clearable
-          ></el-input>
+          <el-input v-model.number="data.qq" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="data.email" class="input-width" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="地址" prop="address">
-          <el-input v-model="data.address" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="注册时间">
           <el-col :span="11">
@@ -108,17 +100,20 @@
           <span v-if="isShowEdit == false">{{data.tellphone}}</span>
           <el-input v-else v-model="data.tellphone" class="input-width" clearable></el-input>
         </el-form-item>
-        <el-form-item label="QQ" prop="qq">
+        <el-form-item
+          label="QQ"
+          prop="qq"
+          :rules="[
+      { required: true, message: 'qq不能为空'},
+      { type: 'number', message: 'qq必须为数字值'}
+    ]"
+        >
           <span v-if="isShowEdit == false">{{data.qq}}</span>
-          <el-input v-else v-model.number="data.qq" @input="emailCheck(data.qq)" class="input-width" clearable></el-input>
+          <el-input type="qq" v-else v-model.number="data.qq" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <span v-if="isShowEdit == false">{{data.email}}</span>
           <el-input v-else v-model="data.email" class="input-width" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="地址" prop="address">
-          <span v-if="isShowEdit == false">{{data.address}}</span>
-          <el-input v-else v-model="data.address" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="状态">
           <span
@@ -223,7 +218,14 @@ export default {
           { validator: checkPhone, trigger: "blur" }
         ],
         sex: [{ required: true, message: "请选择性别", trigger: "change" }],
-        age: [{ required: true, message: "年龄不能为空" }],
+        age: [
+          { required: true, message: "年龄不能为空" },
+          {
+            type: "number",
+            message: "年龄必须为数字值",
+            trigger: "blur,change"
+          }
+        ],
         address: [{ required: true, message: "地址不能为空" }],
         email: [
           { required: true, message: "邮箱地址不能为空", trigger: "blur" },
@@ -232,8 +234,7 @@ export default {
             message: "请输入正确的邮箱地址",
             trigger: "blur,change"
           }
-        ],
-        qq: [{ required: true, message: "qq不能为空" }]
+        ]
       }
     };
   },
@@ -305,12 +306,6 @@ export default {
       this.isShowEdit = !this.isShowEdit;
       if (this.isShowEdit == false) {
         this.getUserById();
-      }
-    },
-    // email qq
-    emailCheck(res) {
-      if (res) {
-        this.data.email = res + "@qq.com";
       }
     }
   }

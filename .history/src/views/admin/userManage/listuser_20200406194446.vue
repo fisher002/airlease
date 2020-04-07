@@ -65,7 +65,7 @@
             >{{ scope.row.status == 'editing' ? '审核中' : '可用' }}</span>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" min-width="25">
+        <el-table-column fixed="right" label="操作" min-width="50">
           <template slot-scope="scope">
             <el-button @click="toDetail(scope.row.userId,'detail')" type="text" size="small">查看</el-button>
             <el-button

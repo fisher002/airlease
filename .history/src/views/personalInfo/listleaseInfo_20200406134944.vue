@@ -10,15 +10,13 @@
     </div> -->
     <div>
       <el-table
-        v-loading="loading"
-        :data="infoData.data"
+        :data="infoData"
         tooltip-effect="dark"
         border
         style="width: 100%"
         @selection-change="handleSelectionChange"
         :default-sort="{prop: 'date', order: 'descending'}"
       >
-        <el-table-column type="selection" align="center" width="55"></el-table-column>
         <el-table-column type="index" align="center" label="序号" width="50"></el-table-column>
         <el-table-column prop="airName" align="center" sortable label="空调名称" width="230"></el-table-column>
         <el-table-column prop="leaseNumber" align="center" sortable label="数量" width="80"></el-table-column>
@@ -52,15 +50,6 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="page-number">
-        <el-pagination
-          background
-          @current-change="pageNumberChange"
-          :current-page="params.pageNumber"
-          layout="total, prev, pager, next, jumper"
-          :total="infoData.total"
-        ></el-pagination>
-      </div>
     </div>
     </div>
     <div v-if="showType == true">
@@ -82,7 +71,6 @@ export default {
         userId: "",
         pageNumber: 0
       },
-      loading: true,
       showType: false,
       leaseId: ''
     };
@@ -102,14 +90,9 @@ export default {
       this.params.userId = this.userData.userId;
       api.getInfoList(this.params).then(
         res => {
-          if(res.data.code == 200){
-            this.infoData = res.data;
-            this.loading = false;
-            this.$message.success(res.data.message)
-          }
+          this.infoData = res.data;
         },
         res => {
-          this.loading = false;
           this.$message.error("error");
         }
       );
@@ -160,14 +143,6 @@ export default {
         this.getLeaseInfoList();
       }
     },
-    // 页码改变
-    pageNumberChange(res) {
-      if (this.infoData.total <= 10) {
-        return;
-      }
-      this.params.pageNumber = res - 1;
-      this.getLeaseInfoList();
-    },
     // 日期格式化
     formatDate(res) {
       let date = new Date(res);
@@ -189,12 +164,6 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 5px 2px;
-  }
-  .page-number {
-    width: 100%;
-    padding: 15px 0;
-    display: flex;
-    justify-content: flex-end;
   }
 }
 </style>

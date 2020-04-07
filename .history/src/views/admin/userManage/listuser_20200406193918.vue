@@ -41,31 +41,31 @@
         <el-table-column type="selection" align="center" width="55"></el-table-column>
         <el-table-column type="index" align="center" label="序号" width="50"></el-table-column>
         <el-table-column prop="username" align="center" sortable label="用户名" width="100"></el-table-column>
-        <el-table-column prop="name" align="center" sortable label="用户昵称" width="150"></el-table-column>
-        <el-table-column prop="tellphone" align="center" sortable label="电话号码" width="150"></el-table-column>
-        <el-table-column prop="qq" align="center" sortable label="qq" width="100"></el-table-column>
-        <el-table-column prop="email" align="center" sortable label="邮箱" width="180"></el-table-column>
-        <el-table-column prop="age" align="center" sortable label="年龄" width="80"></el-table-column>
-        <el-table-column prop="sex" align="center" sortable label="性别" width="80">
+        <el-table-column prop="name" align="center" sortable label="用户昵称" width="200"></el-table-column>
+        <el-table-column prop="tellphone" align="center" sortable label="电话号码" width="200"></el-table-column>
+        <el-table-column prop="qq" align="center" sortable label="qq" width="150"></el-table-column>
+        <el-table-column prop="email" align="center" sortable label="邮箱" width="150"></el-table-column>
+        <el-table-column prop="age" align="center" sortable label="年龄" width="150"></el-table-column>
+        <el-table-column prop="sex" align="center" sortable label="性别" width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.sex == 'M' ? '男' : '女' }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="address" align="center" sortable label="地址" width="200"></el-table-column>
-        <el-table-column prop="userRegisterTime" align="center" sortable label="注册时间" width="150">
+        <el-table-column prop="userRegisterTime" align="center" sortable label="注册时间" width="200">
           <template slot-scope="scope">
             <span>{{ formatDate(scope.row.userRegisterTime) }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="remark" align="center" sortable label="备注"></el-table-column>
-        <el-table-column prop="status" align="center" sortable label="用户状态" width="100">
+        <el-table-column prop="status" align="center" sortable label="用户状态" width="150">
           <template slot-scope="scope">
             <span
               :style="{'color':scope.row.status == 'editing' ? 'red' : '#1fca1f'}"
             >{{ scope.row.status == 'editing' ? '审核中' : '可用' }}</span>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" min-width="25">
+        <el-table-column fixed="right" label="操作" min-width="20">
           <template slot-scope="scope">
             <el-button @click="toDetail(scope.row.userId,'detail')" type="text" size="small">查看</el-button>
             <el-button

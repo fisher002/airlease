@@ -66,6 +66,9 @@
         <el-form-item v-show="isShowEdit" label="密码" prop="adminPassWord">
           <el-input type="password" v-model="data.adminPassWord" class="input-width" clearable></el-input>
         </el-form-item>
+        <el-form-item v-if="isShowEdit == true" label="确认密码" prop="confirmPassword">
+          <el-input type="password" v-model="data.confirmPassword" class="input-width" clearable></el-input>
+        </el-form-item>
         <el-form-item label="昵称" prop="adminName">
           <span v-if="isShowEdit == false">{{data.adminName}}</span>
           <el-input v-else v-model="data.adminName" class="input-width" clearable></el-input>

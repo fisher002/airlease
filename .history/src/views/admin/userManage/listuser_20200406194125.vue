@@ -44,7 +44,7 @@
         <el-table-column prop="name" align="center" sortable label="用户昵称" width="150"></el-table-column>
         <el-table-column prop="tellphone" align="center" sortable label="电话号码" width="150"></el-table-column>
         <el-table-column prop="qq" align="center" sortable label="qq" width="100"></el-table-column>
-        <el-table-column prop="email" align="center" sortable label="邮箱" width="180"></el-table-column>
+        <el-table-column prop="email" align="center" sortable label="邮箱" width="150"></el-table-column>
         <el-table-column prop="age" align="center" sortable label="年龄" width="80"></el-table-column>
         <el-table-column prop="sex" align="center" sortable label="性别" width="80">
           <template slot-scope="scope">
@@ -52,7 +52,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="address" align="center" sortable label="地址" width="200"></el-table-column>
-        <el-table-column prop="userRegisterTime" align="center" sortable label="注册时间" width="150">
+        <el-table-column prop="userRegisterTime" align="center" sortable label="注册时间" width="200">
           <template slot-scope="scope">
             <span>{{ formatDate(scope.row.userRegisterTime) }}</span>
           </template>
@@ -65,7 +65,7 @@
             >{{ scope.row.status == 'editing' ? '审核中' : '可用' }}</span>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" min-width="25">
+        <el-table-column fixed="right" label="操作" min-width="20">
           <template slot-scope="scope">
             <el-button @click="toDetail(scope.row.userId,'detail')" type="text" size="small">查看</el-button>
             <el-button

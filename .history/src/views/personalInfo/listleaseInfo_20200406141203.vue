@@ -10,7 +10,6 @@
     </div> -->
     <div>
       <el-table
-        v-loading="loading"
         :data="infoData.data"
         tooltip-effect="dark"
         border
@@ -82,7 +81,6 @@ export default {
         userId: "",
         pageNumber: 0
       },
-      loading: true,
       showType: false,
       leaseId: ''
     };
@@ -104,12 +102,10 @@ export default {
         res => {
           if(res.data.code == 200){
             this.infoData = res.data;
-            this.loading = false;
             this.$message.success(res.data.message)
           }
         },
         res => {
-          this.loading = false;
           this.$message.error("error");
         }
       );

@@ -3,31 +3,31 @@ const baseUrl = "/api"
 const url = "/am/admin"
 
 export default {
-    getUserList(params) {
+    getAirList(params) {
         return axios({
             method: 'get',
-            url: `${baseUrl}${url}/user/list`,
+            url: `${baseUrl}${url}/air/list`,
             params: params
         })
     },
-    deleteUser(params) {
+    deleteAir(params) {
         return axios({
             method: 'post',
-            url: `${baseUrl}${url}/user/delete`,
+            url: `${baseUrl}${url}/air/delete`,
             data: params
         })
     },
-    getUserById(param) {
+    getAirById(param) {
         return axios({
             method: 'get',
-            url: `${baseUrl}${url}/user/get`,
+            url: `${baseUrl}${url}/air/get`,
             params: param
         })
     },
-    updateUser(params) {
+    updateAir(params) {
         return axios({
             method: 'put',
-            url: `${baseUrl}${url}/user/update`,
+            url: `${baseUrl}${url}/air/update`,
             data: params
         })
     }

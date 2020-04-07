@@ -37,7 +37,7 @@
           <el-input
             v-model.number="data.qq"
             class="input-width"
-            @input="emailCheck(data.qq)"
+            @focus="emailCheck(data.qq)"
             clearable
           ></el-input>
         </el-form-item>
@@ -110,11 +110,11 @@
         </el-form-item>
         <el-form-item label="QQ" prop="qq">
           <span v-if="isShowEdit == false">{{data.qq}}</span>
-          <el-input v-else v-model.number="data.qq" @input="emailCheck(data.qq)" class="input-width" clearable></el-input>
+          <el-input v-else v-model.number="data.qq" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <span v-if="isShowEdit == false">{{data.email}}</span>
-          <el-input v-else v-model="data.email" class="input-width" clearable></el-input>
+          <el-input v-else v-model="data.email" @focus="emailCheck(data.qq)" class="input-width" clearable></el-input>
         </el-form-item>
         <el-form-item label="地址" prop="address">
           <span v-if="isShowEdit == false">{{data.address}}</span>

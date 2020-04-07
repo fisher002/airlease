@@ -10,8 +10,7 @@
     </div> -->
     <div>
       <el-table
-        v-loading="loading"
-        :data="infoData.data"
+        :data="infoData"
         tooltip-effect="dark"
         border
         style="width: 100%"
@@ -58,7 +57,7 @@
           @current-change="pageNumberChange"
           :current-page="params.pageNumber"
           layout="total, prev, pager, next, jumper"
-          :total="infoData.total"
+          :total="data.total"
         ></el-pagination>
       </div>
     </div>
@@ -82,7 +81,6 @@ export default {
         userId: "",
         pageNumber: 0
       },
-      loading: true,
       showType: false,
       leaseId: ''
     };
@@ -103,13 +101,10 @@ export default {
       api.getInfoList(this.params).then(
         res => {
           if(res.data.code == 200){
-            this.infoData = res.data;
-            this.loading = false;
-            this.$message.success(res.data.message)
+            this.infoData = res.data.data;
           }
         },
         res => {
-          this.loading = false;
           this.$message.error("error");
         }
       );
@@ -159,14 +154,6 @@ export default {
         this.showType = false;
         this.getLeaseInfoList();
       }
-    },
-    // 页码改变
-    pageNumberChange(res) {
-      if (this.infoData.total <= 10) {
-        return;
-      }
-      this.params.pageNumber = res - 1;
-      this.getLeaseInfoList();
     },
     // 日期格式化
     formatDate(res) {

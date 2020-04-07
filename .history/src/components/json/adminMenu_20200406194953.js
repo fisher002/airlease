@@ -13,10 +13,5 @@ export default[
         path: '/listair',
         label: '空调管理',
         isIndex: false
-    },
-    {
-        path: '/listairlease',
-        label: '空调详情管理',
-        isIndex: false
     }
 ]
