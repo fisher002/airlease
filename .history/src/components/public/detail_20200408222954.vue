@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="body-right-comment">
-          <usercomment :datas="datas.detaildata"></usercomment>
+          <usercomment :datas="datas"></usercomment>
         </div>
       </div>
     </div>

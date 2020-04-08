@@ -32,8 +32,6 @@ export default {
       message: "",
       commentData: [],
       remind: "点击加载更多",
-      total: "",
-      pages: "",
       data: {
         airId: "",
         airName: "",
@@ -50,26 +48,24 @@ export default {
     };
   },
   created() {
-    if (this.$route.query.airId) {
+    if (this.datas.airId) {
       this.getUserCommentList();
     }
   },
   methods: {
     // 查询该空调的评论
     getUserCommentList(type) {
-      this.params.airId = this.$route.query.airId;
-      if (this.params.pageNumber < this.pages - 1) {
+      this.params.airId = this.datas.airId;
+      if (type == "mord") {
         this.params.pageNumber++;
       }
       api.getUserCommentList(this.params).then(
         res => {
           if (res.data.code == "200") {
-            this.total = res.data.total;
-            this.pages = res.data.pages;
-            if (res.data.total < 10) {
+            if (res.data.data.length <= 0) {
               this.remind = "没有更多了";
             }
-            if (type == "mord" && res.data.total > 10) {
+            if (type == "mord") {
               this.commentData.push(...res.data.data);
               this.remind = "点击加载更多";
               return;

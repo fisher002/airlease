@@ -58,7 +58,7 @@ export default {
     // 查询该空调的评论
     getUserCommentList(type) {
       this.params.airId = this.$route.query.airId;
-      if (this.params.pageNumber < this.pages - 1) {
+      if (this.params.pageNumber < this.pages) {
         this.params.pageNumber++;
       }
       api.getUserCommentList(this.params).then(
@@ -69,7 +69,7 @@ export default {
             if (res.data.total < 10) {
               this.remind = "没有更多了";
             }
-            if (type == "mord" && res.data.total > 10) {
+            if (type == "mord") {
               this.commentData.push(...res.data.data);
               this.remind = "点击加载更多";
               return;

@@ -23,34 +23,32 @@
   </div>
 </template>
 <script>
-import api from "@/views/index/indexUrl";
+import api from '@/views/index/indexUrl'
 export default {
   name: "usercomment",
-  props: { datas: "" },
+  props: {datas},
   data() {
     return {
       message: "",
       commentData: [],
-      remind: "点击加载更多",
-      total: "",
-      pages: "",
+      remind: '点击加载更多',
       data: {
-        airId: "",
-        airName: "",
-        userId: "",
-        username: "",
-        commentContent: "",
+        airId: '',
+        airName: '',
+        userId: '',
+        username: '',
+        commentContent: '',
         commentDate: new Date(),
-        isDelete: "false"
+        isDelete: 'false'
       },
       params: {
-        airId: "",
+        airId: '',
         pageNumber: 0
       }
     };
   },
   created() {
-    if (this.$route.query.airId) {
+    if(this.$route.query.airId) {
       this.getUserCommentList();
     }
   },
@@ -58,42 +56,37 @@ export default {
     // 查询该空调的评论
     getUserCommentList(type) {
       this.params.airId = this.$route.query.airId;
-      if (this.params.pageNumber < this.pages - 1) {
+      if(type == 'mord') {
         this.params.pageNumber++;
       }
-      api.getUserCommentList(this.params).then(
-        res => {
-          if (res.data.code == "200") {
-            this.total = res.data.total;
-            this.pages = res.data.pages;
-            if (res.data.total < 10) {
-              this.remind = "没有更多了";
-            }
-            if (type == "mord" && res.data.total > 10) {
-              this.commentData.push(...res.data.data);
-              this.remind = "点击加载更多";
-              return;
-            }
-            this.commentData = res.data.data;
+      api.getUserCommentList(this.params).then(res=>{
+        if(res.data.code == "200") {
+          if(res.data.data.length <= 0){
+            this.remind = '没有更多了';
           }
-        },
-        res => {
-          this.$message.error(res.data.message);
+          if(type == 'mord') {
+            this.commentData.push(...res.data.data);
+            this.remind = '点击加载更多';
+            return;
+          }
+          this.commentData = res.data.data;
         }
-      );
+      },res=>{
+        this.$message.error(res.data.message);
+      })
     },
     // 加载更多
     toLoadMord() {
-      if (this.commentData.length % 10 > 0) {
-        this.remind = "没有更多了";
+      if((this.commentData.length)%10 > 0) {
+        this.remind = '没有更多了';
         return;
       }
-      this.getUserCommentList("mord");
+      this.getUserCommentList('mord');
     },
     // 添加评论
     sendComment() {
-      let user = this.$session.get("user");
-      if (!user) {
+      let user = this.$session.get('user');
+      if(!user) {
         this.$message.error("未登录，不可评论！");
         return;
       }
@@ -101,27 +94,24 @@ export default {
         this.$message.error("不可以发送空白内容！");
         return;
       }
-      this.data.airId = this.datas.airId;
+      this.data.airId = this.$route.query.airId;
       this.data.airName = this.datas.airName;
       this.data.userId = user.userId;
       this.data.username = user.username;
-      this.addComment(this.data);
+      // this.addComment(this.data);
     },
     // 添加评论
     addComment(res) {
-      if (res) {
-        api.addUserComment(res).then(
-          res => {
-            if (res.data == "100000") {
-              this.$message.success("评论成功");
-              this.data.commentContent = "";
-              this.getUserCommentList("mord");
-            }
-          },
-          res => {
-            this.$message.error("评论失败");
+      if(res) {
+        api.addUserComment(res).then(res=>{
+          if(res.data == '100000') {
+            this.$message.success('评论成功');
+            this.data.commentContent = '';
+            this.getUserCommentList('mord');
           }
-        );
+        },res=>{
+          this.$message.error('评论失败')
+        })
       }
     },
     // 日期格式化

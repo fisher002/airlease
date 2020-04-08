@@ -69,7 +69,7 @@ export default {
             if (res.data.total < 10) {
               this.remind = "没有更多了";
             }
-            if (type == "mord" && res.data.total > 10) {
+            if (type == "mord") {
               this.commentData.push(...res.data.data);
               this.remind = "点击加载更多";
               return;
