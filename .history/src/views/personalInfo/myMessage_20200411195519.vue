@@ -7,7 +7,6 @@
         </div>
         <div class="left-name-time" v-if="userData">
           <div class="left-name">{{userData.name}}</div>
-          <div>{{userData.sex == 'M' ? '男' : '女'}}</div>
           <div class="left-time">{{formatDate(userData.userRegisterTime)}}</div>
         </div>
       </div>

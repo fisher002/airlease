@@ -38,15 +38,13 @@
       <el-input v-model="userData.email"></el-input>
     </el-form-item>
     <el-form-item label="地址" prop="address">
-      <div class="map-address">
-      <el-input class="map-input" v-model="userData.address" clearable width="250"></el-input>
-      <!-- <div id="container"></div> -->
+      <el-input v-model="userData.address"></el-input>
+      <div id="container"></div>
       <el-button
         :loading="loading"
         type="primary"
         @click="getUserLocation"
       >{{loading ? '获取位置中...' : '点击获取位置'}}</el-button>
-      </div>
     </el-form-item>
     <el-form-item label="注册时间" required>
       <el-col :span="11">
@@ -102,7 +100,6 @@ export default {
         password: "",
         confirmPassword: "",
         tellphone: "",
-        headPicture: "http://i2.hdslb.com/bfs/face/94e917f37af8c515d5ee05791fda78da93171fe1.jpg@52w_52h.webp",
         age: "",
         sex: "",
         address: "",
@@ -198,20 +195,13 @@ export default {
     getUserLocation() {
       /**获取地图定位*/
       let _that = this;
-      this.loading = true;
       let geolocation = location.initMap("container"); //定位 传demo  id
-      AMap.event.addListener(geolocation, "complete", res => {
-        // _that.lat = result.position.lat;// 经度
-        // _that.lng = result.position.lng;// 维度
-        // _that.province = result.addressComponent.province; // 省份
-        // _that.city = result.addressComponent.city; // 城市
-        // _that.district = result.addressComponent.district;
-        if(res.info === 'SUCCESS') {
-          _that.userData.address = res.formattedAddress;
-          this.loading = false;
-          return;
-        }
-        this.loading = false;
+      AMap.event.addListener(geolocation, "complete", result => {
+        _that.lat = result.position.lat;
+        _that.lng = result.position.lng;
+        _that.province = result.addressComponent.province;
+        _that.city = result.addressComponent.city;
+        _that.district = result.addressComponent.district;
       });
     }
   }
@@ -221,12 +211,5 @@ export default {
 #container {
   width: 350px;
   height: 200px;
-}
-.map-address {
-  display: flex;
-  justify-content: space-between;
-  .map-input {
-    width: 83%;
-  }
 }
 </style>

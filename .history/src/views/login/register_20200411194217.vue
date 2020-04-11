@@ -38,8 +38,8 @@
       <el-input v-model="userData.email"></el-input>
     </el-form-item>
     <el-form-item label="地址" prop="address">
-      <div class="map-address">
-      <el-input class="map-input" v-model="userData.address" clearable width="250"></el-input>
+      <div style="float:left">
+      <span>{{userData.address}}</span>
       <!-- <div id="container"></div> -->
       <el-button
         :loading="loading"
@@ -102,7 +102,6 @@ export default {
         password: "",
         confirmPassword: "",
         tellphone: "",
-        headPicture: "http://i2.hdslb.com/bfs/face/94e917f37af8c515d5ee05791fda78da93171fe1.jpg@52w_52h.webp",
         age: "",
         sex: "",
         address: "",
@@ -221,12 +220,5 @@ export default {
 #container {
   width: 350px;
   height: 200px;
-}
-.map-address {
-  display: flex;
-  justify-content: space-between;
-  .map-input {
-    width: 83%;
-  }
 }
 </style>

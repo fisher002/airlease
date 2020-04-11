@@ -38,15 +38,8 @@
       <el-input v-model="userData.email"></el-input>
     </el-form-item>
     <el-form-item label="地址" prop="address">
-      <div class="map-address">
-      <el-input class="map-input" v-model="userData.address" clearable width="250"></el-input>
-      <!-- <div id="container"></div> -->
-      <el-button
-        :loading="loading"
-        type="primary"
-        @click="getUserLocation"
-      >{{loading ? '获取位置中...' : '点击获取位置'}}</el-button>
-      </div>
+      <!-- <el-input v-model="userData.address"></el-input> -->
+      <el-button type="primary" @click="getUserLocation">获取位置</el-button>
     </el-form-item>
     <el-form-item label="注册时间" required>
       <el-col :span="11">
@@ -71,7 +64,6 @@
 </template>
 <script>
 import api from "./registeruser";
-import { location } from "@/components/map/getMap";
 export default {
   data() {
     // 表单规则自定义测试 全局变量
@@ -95,14 +87,12 @@ export default {
       }
     };
     return {
-      loading: false,
       userData: {
         username: "",
         name: "",
         password: "",
         confirmPassword: "",
         tellphone: "",
-        headPicture: "http://i2.hdslb.com/bfs/face/94e917f37af8c515d5ee05791fda78da93171fe1.jpg@52w_52h.webp",
         age: "",
         sex: "",
         address: "",
@@ -196,37 +186,37 @@ export default {
       }
     },
     getUserLocation() {
-      /**获取地图定位*/
-      let _that = this;
-      this.loading = true;
-      let geolocation = location.initMap("container"); //定位 传demo  id
-      AMap.event.addListener(geolocation, "complete", res => {
-        // _that.lat = result.position.lat;// 经度
-        // _that.lng = result.position.lng;// 维度
-        // _that.province = result.addressComponent.province; // 省份
-        // _that.city = result.addressComponent.city; // 城市
-        // _that.district = result.addressComponent.district;
-        if(res.info === 'SUCCESS') {
-          _that.userData.address = res.formattedAddress;
-          this.loading = false;
-          return;
-        }
-        this.loading = false;
-      });
+      if (navigator.geolocation) {
+        this.$message.warn("该浏览器不支持地理定位！");
+      }
+      navigator.geolocation.getCurrentPosition(
+        this.showPosition,
+        this.showError
+      );
+    },
+    showPosition(position) {
+      let lat = position.coords.latitude; //纬度
+      let lag = position.coords.longitude; //经度
+      console.log("纬度:" + lat + ",经度:" + lag);
+    },
+    showError(error) {
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          this.$message.warn("定位失败,用户拒绝请求地理定位");
+          break;
+        case error.POSITION_UNAVAILABLE:
+          this.$message.warn("定位失败,位置信息是不可用");
+          break;
+        case error.TIMEOUT:
+          this.$message.warn("定位失败,请求获取用户位置超时");
+          break;
+        case error.UNKNOWN_ERROR:
+          this.$message.warn("定位失败,定位系统失效");
+          break;
+      }
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-#container {
-  width: 350px;
-  height: 200px;
-}
-.map-address {
-  display: flex;
-  justify-content: space-between;
-  .map-input {
-    width: 83%;
-  }
-}
 </style>

@@ -102,7 +102,6 @@ export default {
         password: "",
         confirmPassword: "",
         tellphone: "",
-        headPicture: "http://i2.hdslb.com/bfs/face/94e917f37af8c515d5ee05791fda78da93171fe1.jpg@52w_52h.webp",
         age: "",
         sex: "",
         address: "",
@@ -226,7 +225,7 @@ export default {
   display: flex;
   justify-content: space-between;
   .map-input {
-    width: 83%;
+    width: 80%;
   }
 }
 </style>
