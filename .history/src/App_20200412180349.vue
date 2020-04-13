@@ -19,15 +19,17 @@ export default {
       isAdmin: false
     };
   },
-  created() {
+  beforeCreate() {
     // pc 移动端判断
     if (this.isMobile()) {
       console.log("移动端");
       this.$router.push("/indexMobile");
     } else {
       console.log("PC端");
+      this.$router.push("/index");
     }
   },
+  created() {},
   mounted() {},
   methods: {
     reload() {

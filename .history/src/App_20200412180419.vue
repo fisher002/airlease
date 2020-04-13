@@ -26,6 +26,7 @@ export default {
       this.$router.push("/indexMobile");
     } else {
       console.log("PC端");
+      this.$router.push("/index");
     }
   },
   mounted() {},

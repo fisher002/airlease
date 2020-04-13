@@ -20,9 +20,7 @@ import listusercom from '@/views/admin/usercomManage/listusercom'
 import detailusercom from '@/views/admin/usercomManage/detailusercom'
 // 移动端
 import indexMobile from '@/views/view-mobile/indexMobile'
-import loginMain from '@/views/view-mobile/mobile-index/loginMain'
 import indexMain from '@/views/view-mobile/mobile-index/indexMain'
-import detailMain from '@/views/view-mobile/mobile-index/detailMain'
 
 Vue.use(Router)
 
@@ -147,16 +145,7 @@ export default new Router({
           path: '/indexMain',
           name: 'indexMain',
           component: indexMain
-        },
-        {
-          path: '/detailMain',
-          name: 'detailMain',
-          component: detailMain
-        },{
-          path: '/loginMain',
-          name: 'loginMain',
-          component: loginMain
-        },
+        }
       ]
     }
   ]

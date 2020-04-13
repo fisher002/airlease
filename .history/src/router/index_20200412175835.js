@@ -20,7 +20,6 @@ import listusercom from '@/views/admin/usercomManage/listusercom'
 import detailusercom from '@/views/admin/usercomManage/detailusercom'
 // 移动端
 import indexMobile from '@/views/view-mobile/indexMobile'
-import loginMain from '@/views/view-mobile/mobile-index/loginMain'
 import indexMain from '@/views/view-mobile/mobile-index/indexMain'
 import detailMain from '@/views/view-mobile/mobile-index/detailMain'
 
@@ -31,7 +30,7 @@ export default new Router({
     {
       path: '/',
       name: '/',
-      redirect: '/index'
+      redirect: '/'
     },
     {
       path: '/index',
@@ -152,11 +151,7 @@ export default new Router({
           path: '/detailMain',
           name: 'detailMain',
           component: detailMain
-        },{
-          path: '/loginMain',
-          name: 'loginMain',
-          component: loginMain
-        },
+        }
       ]
     }
   ]

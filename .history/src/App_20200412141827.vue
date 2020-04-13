@@ -19,16 +19,9 @@ export default {
       isAdmin: false
     };
   },
-  created() {
-    // pc 移动端判断
-    if (this.isMobile()) {
-      console.log("移动端");
-      this.$router.push("/indexMobile");
-    } else {
-      console.log("PC端");
-    }
+  mounted() {
+    this.isMobile();
   },
-  mounted() {},
   methods: {
     reload() {
       this.isRouterAlive = false; //先关闭，
@@ -38,11 +31,8 @@ export default {
     },
     // pc 移动端判断
     isMobile() {
-      let flag = navigator.userAgent.match(
-        // match方法可在字符串内检索指定的值
-        /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
-      );
-      return flag;
+      let flag = navigator.userAgent;
+      console.log("flag: "+flag);
     }
   }
 };
