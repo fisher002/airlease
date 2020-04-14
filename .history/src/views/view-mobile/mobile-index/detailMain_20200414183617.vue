@@ -169,7 +169,7 @@ export default {
               if (res.data == "100000") {
                 this.$message.success("提交成功");
                 this.loading = false;
-                this.resetForm('checkFor');
+                this.resetForm();
                 return;
               }
               this.loading = false;

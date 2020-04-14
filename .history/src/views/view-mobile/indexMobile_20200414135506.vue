@@ -13,20 +13,15 @@
       <router-view />
     </div>
     <div class="index-footer">
-      <div class="bottom" @click="toIndex('/indexMain')">首页</div>
-      <div class="bottom" @click="toDetail('/indexPersonal','mine')">我的</div>
+      <div class="bottom" @click="toIndex">首页</div>
+      <div class="bottom">我的</div>
     </div>
     <div v-if="showMenu == true" class="menu-list">
       <div class="right-menus" :style="{'right':showMenu ? '0' : '-30%'}">
         <el-button type="text" class="menu-btn" @click="toDetail()">关于我们</el-button>
         <el-button type="text" class="menu-btn" @click="toDetail()">联系我们</el-button>
         <el-button v-if="isLogin == false" type="text" class="menu-btn" @click="toLogin()">立即登录</el-button>
-        <el-button
-          v-if="isLogin == true"
-          type="text"
-          class="menu-btn"
-          @click="toDetail('/indexPersonal','person')"
-        >个人中心</el-button>
+        <el-button v-if="isLogin == true" type="text" class="menu-btn" @click="toDetail('/indexPersonal')">个人中心</el-button>
         <el-button type="text" class="menu-btn" @click="showMenu = !showMenu">关闭菜单</el-button>
       </div>
       <div class="bottom-black" @click="showMenu = !showMenu"></div>
@@ -68,32 +63,16 @@ export default {
     showRight() {
       this.showMenu = !this.showMenu;
     },
-    toIndex(path) {
-      if (this.$route.path === path) {
-        console.log('路由相同')
+    toIndex() {
+      if (this.showBack == false) {
         return;
       }
       this.reback();
-      this.$router.push(path);
+      this.$router.push("/indexMain");
     },
-    toDetail(path, type) {
-      if (this.$route.path === path) {
-        console.log('路由相同')
-        return;
-      }
-      if (path && type === "person") {
-        this.reback();
-        this.showRight();
+    toDetail(path) {
+      if(path) {
         this.$router.push(path);
-      } else if (path && type === "mine") {
-        this.reback();
-        this.$router.push(path);
-      } else if (path) {
-        this.reback();
-        this.showRight();
-        this.$router.push(path);
-      } else {
-        return;
       }
     },
     toLogin() {

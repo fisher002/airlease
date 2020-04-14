@@ -13,7 +13,7 @@
       <router-view />
     </div>
     <div class="index-footer">
-      <div class="bottom" @click="toIndex('/indexMain')">首页</div>
+      <div class="bottom" @click="toIndex">首页</div>
       <div class="bottom" @click="toDetail('/indexPersonal','mine')">我的</div>
     </div>
     <div v-if="showMenu == true" class="menu-list">
@@ -68,19 +68,14 @@ export default {
     showRight() {
       this.showMenu = !this.showMenu;
     },
-    toIndex(path) {
-      if (this.$route.path === path) {
-        console.log('路由相同')
+    toIndex() {
+      if (this.showBack == false) {
         return;
       }
       this.reback();
-      this.$router.push(path);
+      this.$router.push("/indexMain");
     },
     toDetail(path, type) {
-      if (this.$route.path === path) {
-        console.log('路由相同')
-        return;
-      }
       if (path && type === "person") {
         this.reback();
         this.showRight();
