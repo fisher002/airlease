@@ -113,7 +113,7 @@ export default {
       if (type == "0") {
         this.usdata.content = "空调租赁公司";
       } else {
-        this.usdata.content = "<div>phone: 13900000000</div><br/><div>email: 1688856@qq.com</div>";
+        this.usdata.content = "<div>phone: 13900000000</div><div>email: 1688856@qq.com</div>";
       }
     },
     toIndex(path) {

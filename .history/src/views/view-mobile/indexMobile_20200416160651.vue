@@ -25,7 +25,7 @@
       <div class="left-show" v-show="leftUs">
         <i class="el-icon-close fix" @click="leftUs = !leftUs"></i>
         <div class="title">--{{usdata.title}}--</div>
-        <div class="us-content" v-html="usdata.content"></div>
+        <div class="us-content">{{usdata.content}}</div>
       </div>
       <div class="right-menus">
         <el-button type="text" class="menu-btn" @click="toUs('关于我们','0')">关于我们</el-button>
@@ -113,7 +113,7 @@ export default {
       if (type == "0") {
         this.usdata.content = "空调租赁公司";
       } else {
-        this.usdata.content = "<div>phone: 13900000000</div><br/><div>email: 1688856@qq.com</div>";
+        this.usdata.content = "phone: 13900000000";
       }
     },
     toIndex(path) {

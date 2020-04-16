@@ -25,7 +25,6 @@ import indexMain from '@/views/view-mobile/mobile-index/indexMain'
 import detailMain from '@/views/view-mobile/mobile-index/detailMain'
 import indexPersonal from '@/views/view-mobile/mobile-personal/indexPersonal'
 import detaillease from '@/views/view-mobile/mobile-personal/detaillease'
-import indexComment from '@/views/view-mobile/mobile-comment/indexComment'
 
 Vue.use(Router)
 
@@ -181,12 +180,7 @@ export default new Router({
           },
           name: 'detaillease',
           component: detaillease
-        },
-        {
-          path: '/indexComment',
-          name: 'indexComment',
-          component: indexComment
-        },
+        }
       ]
     }
   ]

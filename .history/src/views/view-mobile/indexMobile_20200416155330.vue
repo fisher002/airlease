@@ -23,9 +23,9 @@
     </div>
     <div v-show="showMenu" class="menu-list">
       <div class="left-show" v-show="leftUs">
-        <i class="el-icon-close fix" @click="leftUs = !leftUs"></i>
-        <div class="title">--{{usdata.title}}--</div>
-        <div class="us-content" v-html="usdata.content"></div>
+        <i class="el-icon-close"></i>
+        <div class="title">{{usdata.title}}</div>
+        <div class="title">{{usdata.content}}</div>
       </div>
       <div class="right-menus">
         <el-button type="text" class="menu-btn" @click="toUs('关于我们','0')">关于我们</el-button>
@@ -107,13 +107,16 @@ export default {
     showRight() {
       this.showMenu = !this.showMenu;
     },
-    toUs(title, type) {
-      this.leftUs = true;
+    toUs(title,type) {
+      if(this.leftUs) {
+        return;
+      }
+      this.leftUs = !this.leftUs;
       this.usdata.title = title;
-      if (type == "0") {
-        this.usdata.content = "空调租赁公司";
-      } else {
-        this.usdata.content = "<div>phone: 13900000000</div><br/><div>email: 1688856@qq.com</div>";
+      if(type == '0') {
+        this.usdata.content = "0000000000000000";
+      }else {
+        this.usdata.content = "1111111111111111";
       }
     },
     toIndex(path) {
@@ -221,26 +224,12 @@ export default {
     top: 0;
     .left-show {
       position: absolute;
-      z-index: 10000;
+      z-index: 9999;
       left: 0;
       width: 70%;
       height: 100%;
       background: #fff;
       border-right: 1px solid #e2cfcf;
-      .title {
-        font-size: 20px;
-        font-weight: bold;
-        padding: 10px;
-      }
-      .fix {
-        position: absolute;
-        right: 0;
-        top: 10px;
-        font-size: 30px;
-      }
-      .us-content {
-        padding: 10px;
-      }
     }
     .right-menus {
       position: absolute;

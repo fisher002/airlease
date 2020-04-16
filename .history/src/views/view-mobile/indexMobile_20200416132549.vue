@@ -20,16 +20,13 @@
         @click="toDetail(item.path,item.type)"
         :style="{'color':item.showColor ? '#409EFF':''}"
       >{{item.label}}</div>
+      <!-- <div class="bottom" @click="toIndex('/indexMain')">首页</div>
+      <div class="bottom" @click="toDetail('/indexPersonal','mine')">我的</div>-->
     </div>
-    <div v-show="showMenu" class="menu-list">
-      <div class="left-show" v-show="leftUs">
-        <i class="el-icon-close fix" @click="leftUs = !leftUs"></i>
-        <div class="title">--{{usdata.title}}--</div>
-        <div class="us-content" v-html="usdata.content"></div>
-      </div>
-      <div class="right-menus">
-        <el-button type="text" class="menu-btn" @click="toUs('关于我们','0')">关于我们</el-button>
-        <el-button type="text" class="menu-btn" @click="toUs('联系我们','1')">联系我们</el-button>
+    <div v-if="showMenu == true" class="menu-list">
+      <div class="right-menus" :style="{'right':showMenu ? '0' : '-30%'}">
+        <el-button type="text" class="menu-btn" @click="toDetail()">关于我们</el-button>
+        <el-button type="text" class="menu-btn" @click="toDetail()">联系我们</el-button>
         <el-button v-if="isLogin == false" type="text" class="menu-btn" @click="toLogin()">立即登录</el-button>
         <el-button
           v-show="isLogin"
@@ -53,7 +50,7 @@ const menus = [
     type: "0"
   },
   {
-    path: "/indexComment",
+    path: "/indexMain",
     label: "评价",
     showColor: false,
     type: "0"
@@ -75,19 +72,15 @@ export default {
   },
   data() {
     return {
-      leftUs: false,
       isLogin: false,
       showMenu: false,
       showBack: false,
-      usdata: {
-        title: "",
-        content: ""
-      },
       menudata: [...menus]
     };
   },
   created() {
     this.relogin();
+    this.checkPath("/indexMain");
   },
   methods: {
     reback() {
@@ -107,15 +100,6 @@ export default {
     showRight() {
       this.showMenu = !this.showMenu;
     },
-    toUs(title, type) {
-      this.leftUs = true;
-      this.usdata.title = title;
-      if (type == "0") {
-        this.usdata.content = "空调租赁公司";
-      } else {
-        this.usdata.content = "<div>phone: 13900000000</div><br/><div>email: 1688856@qq.com</div>";
-      }
-    },
     toIndex(path) {
       if (this.$route.path === path) {
         return;
@@ -123,15 +107,15 @@ export default {
       this.$router.push(path);
     },
     toDetail(path, type) {
-      if (this.checkPath(path)) {
-        return;
-      }
-      if (type === "person") {
-        this.checkLogin(path);
+      this.checkPath(path);
+      if (path && type === "person") {
+        this.checkLogin();
         this.showRight();
-      } else if (type === "mine") {
-        this.checkLogin(path);
-      } else if (type === "0") {
+        this.$router.push(path);
+      } else if (path && type === "mine") {
+        this.checkLogin();
+        this.$router.push(path);
+      } else if (path && type === "0") {
         this.$router.push(path);
       } else if (path) {
         this.showRight();
@@ -140,7 +124,7 @@ export default {
         return;
       }
     },
-    checkLogin(path) {
+    checkLogin() {
       if (
         !sessionStorage.getItem("isLogin") ||
         sessionStorage.getItem("isLogin") === "false"
@@ -149,19 +133,19 @@ export default {
         this.$router.push("/loginMain");
         return;
       }
-      this.$router.push(path);
     },
     checkPath(path) {
-      this.menudata.forEach(e => {
-        e.showColor = false;
-      });
-      this.menudata.forEach(e => {
-        if (path === e.path) {
-          e.showColor = !e.showColor;
-        }
-      });
       if (this.$route.path === path) {
-        return true;
+        this.menudata.forEach(e => {
+          e.showColor = false;
+        });
+        this.menudata.forEach(e => {
+          e.showColor = false;
+          if(path === e.path) {
+            e.showColor = !e.showColor;
+          }
+        });
+        return;
       }
     },
     toLogin() {
@@ -219,29 +203,6 @@ export default {
     width: 100%;
     height: 100%;
     top: 0;
-    .left-show {
-      position: absolute;
-      z-index: 10000;
-      left: 0;
-      width: 70%;
-      height: 100%;
-      background: #fff;
-      border-right: 1px solid #e2cfcf;
-      .title {
-        font-size: 20px;
-        font-weight: bold;
-        padding: 10px;
-      }
-      .fix {
-        position: absolute;
-        right: 0;
-        top: 10px;
-        font-size: 30px;
-      }
-      .us-content {
-        padding: 10px;
-      }
-    }
     .right-menus {
       position: absolute;
       z-index: 9999;
