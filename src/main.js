@@ -6,10 +6,12 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import router from './router'
 import vueSession from 'vue-session'
+import md5 from 'js-md5' /**引入md5加密 全局使用 */
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(vueSession)
+Vue.prototype.$md5 = md5
 
 /* eslint-disable no-new */
 // 路由拦截

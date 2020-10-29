@@ -240,6 +240,8 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.editPassword.userId = this.userData.userId;
+          this.editPassword.newPassword = this.$md5(this.editPassword.newPassword);
+          this.editPassword.oldPassword = this.$md5(this.editPassword.oldPassword);
           api.updateUserPassword(this.editPassword).then(
             res => {
               if (res.data == "100000") {

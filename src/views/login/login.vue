@@ -77,6 +77,7 @@ export default {
       // 账号密码输入不能为空
       if (this.loginData.tellphone && this.loginData.password) {
         // 管理员登录
+        this.loginData.password = this.$md5(this.loginData.password);
         if (this.isShowLoginType == false) {
           api.checkLoginAdmin(this.loginData).then(
             res => {

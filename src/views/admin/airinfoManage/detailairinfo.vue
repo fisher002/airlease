@@ -139,12 +139,15 @@ export default {
         type: ""
       },
       rules: {
-        airId: [
-          { required: true, message: "请选择一个空调", trigger: "blur" }
-        ],
+        airId: [{ required: true, message: "请选择一个空调", trigger: "blur" }],
         airName: [
           { required: true, message: "空调名不能为空", trigger: "blur" },
-          { min: 1, max: 100, message: "长度在 1 到 100 个字符", trigger: "blur" }
+          {
+            min: 1,
+            max: 100,
+            message: "长度在 1 到 100 个字符",
+            trigger: "blur"
+          }
         ],
         airRent: [
           { required: true, message: "租金不能为空", trigger: "blur" },
@@ -160,12 +163,17 @@ export default {
         ],
         airDescribe: [
           { required: true, message: "描述不能为空", trigger: "blur" },
-          { min: 1, max: 200, message: "长度在 1 到 200 个字符", trigger: "blur" }
+          {
+            min: 1,
+            max: 200,
+            message: "长度在 1 到 200 个字符",
+            trigger: "blur"
+          }
         ],
         airStock: [
           { required: true, message: "库存不能为空", trigger: "blur" },
           { type: "number", message: "库存必须为数字", trigger: "blur" }
-        ],
+        ]
       }
     };
   },
@@ -202,13 +210,13 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           // 校验通过
-          if(this.params.type == 'add') {
+          if (this.params.type == "add") {
             this.airs.forEach(e => {
-              if(e.airId === this.data.airId) {
+              if (e.airId === this.data.airId) {
                 this.data.airName = e.airName;
                 return;
               }
-            })
+            });
           }
           api.updateAirInfo(this.data).then(
             res => {
@@ -259,10 +267,8 @@ export default {
         }
       });
       api.getAirInfoIds().then(res => {
-        if (res.data.code == 200) {
-          this.infoIds = res.data.data;
-          this.setAirIds();
-        }
+        this.infoIds = res.data.data;
+        this.setAirIds();
       });
     },
     setAirIds() {
@@ -270,12 +276,15 @@ export default {
         return;
       }
       this.airIds = [];
-      if (this.ids.length > 0 && this.infoIds.length > 0) {
+      if (this.ids.length > 0) {
         this.ids.forEach(e => {
-          if (this.infoIds.find(i => i === e)) {
-            return;
+          if (this.infoIds != null) {
+            this.infoIds.forEach(i => {
+              if(i !== e) {
+                this.airIds.push(e);
+              }
+            });
           }
-          this.airIds.push(e);
         });
         this.getAllAirs(this.airIds);
       }

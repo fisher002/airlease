@@ -207,6 +207,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           // 校验通过
+          this.data.adminPassWord = this.$md5(this.data.adminPassWord);
           api.updateAdmin(this.data).then(
             res => {
               if (res.data.code == 200) {

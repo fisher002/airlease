@@ -164,6 +164,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           // 校验通过
+          this.userData.password = this.$md5(this.userData.password);
           api.toRegisterUser(this.userData).then(
             res => {
               if (res.data.code == 200) {
