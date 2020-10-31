@@ -69,7 +69,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="评论时间" prop="commentDate">
-          <span v-if="isShowEdit == false">{{data.commentDate}}</span>
+          <span v-if="isShowEdit == false">{{formatDate(data.commentDate)}}</span>
           <el-col :span="11" v-else>
             <el-form-item prop="commentDate">
               <el-date-picker
@@ -93,6 +93,7 @@
 </template>
 <script>
 import api from "./usercomUrl";
+import comm from "@/components/comm/comm";
 export default {
   data() {
     return {
@@ -185,6 +186,10 @@ export default {
       if (this.isShowEdit == false) {
         this.getUserComById();
       }
+    },
+    // 时间格式化
+    formatDate(res) {
+      return comm.formatDate(res);
     }
   }
 };

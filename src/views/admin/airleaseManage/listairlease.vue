@@ -97,6 +97,7 @@
 </template>
 <script>
 import api from "./airleaseUrl";
+import comm from '@/components/comm/comm'
 export default {
   components: {},
   data() {
@@ -207,14 +208,7 @@ export default {
     },
     // 日期格式化
     formatDate(res) {
-      let date = new Date(res);
-      let year = date.getFullYear(),
-        mouth =
-          date.getMonth() + 1 < 10
-            ? `0${date.getMonth() + 1}`
-            : date.getMonth() + 1,
-        day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
-      return year + "-" + mouth + "-" + day;
+      return comm.formatDateV1(res);
     }
   }
 };

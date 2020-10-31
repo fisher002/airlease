@@ -4,10 +4,10 @@
     <div class="detail-body">
       <div class="detail-body-left">
         <div class="left-img-show">
-          <img v-if="datas.imglist.data" :src="datas.imglist.data[0]" />
+          <img v-if="datas.imglist.data" :src="imgUrl ? imgUrl : datas.imglist.data[0]" />
         </div>
         <div class="left-img-list">
-          <div class="list-one" v-for="(item,index) in datas.imglist.data" :key="index">
+          <div class="list-one" v-for="(item,index) in datas.imglist.data" :key="index" @mouseenter="getUrl(item)">
             <img :src="item" />
           </div>
         </div>
@@ -40,6 +40,7 @@ export default {
   },
   data() {
     return {
+      imgUrl: ''
     };
   },
   created() {},
@@ -50,6 +51,11 @@ export default {
         return;
       }
       this.$emit("callback","ok");
+    },
+    getUrl(res) {
+      if(res) {
+        this.imgUrl = res;
+      }
     }
   }
 };

@@ -17,13 +17,20 @@
       </div>
     </div>
     <div class="body-send-btn">
-      <el-input class="input-height" v-model="data.commentContent" placeholder="来一发吧" clearable></el-input>
+      <el-input
+        class="input-height"
+        v-model="data.commentContent"
+        @keyup.enter.native="sendComment()"
+        placeholder="来一发吧"
+        clearable
+      ></el-input>
       <el-button @click="sendComment()" type="primary">发送</el-button>
     </div>
   </div>
 </template>
 <script>
 import api from "@/views/index/indexUrl";
+import comm from "@/components/comm/comm";
 export default {
   name: "usercomment",
   props: { datas: "" },
@@ -70,11 +77,11 @@ export default {
             this.total = res.data.total;
             this.pages = res.data.pages;
             if (res.data.total < 10) {
-              this.remind = "没有更多了";
+              this.remind = "共 " + res.data.total + " 条评论";
             }
             if (type == "mord" && res.data.total > 10) {
               this.commentData.push(...res.data.data);
-              this.remind = "点击加载更多";
+              this.remind = "共 " + this.total + " 条评论,点击加载更多";
               return;
             }
             this.commentData = res.data.data;
@@ -89,7 +96,7 @@ export default {
     // 加载更多
     toLoadMord() {
       if (this.commentData.length % 10 > 0) {
-        this.remind = "没有更多了";
+        this.remind = "共 " + this.total + " 条评论,没有更多了";
         return;
       }
       this.getUserCommentList("mord");
@@ -130,17 +137,7 @@ export default {
     },
     // 日期格式化
     formatDate(res) {
-      let date = new Date(res);
-      let year = date.getFullYear(),
-        mouth =
-          date.getMonth() + 1 < 10
-            ? `0${date.getMonth() + 1}`
-            : date.getMonth() + 1,
-        day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate(),
-        hour = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours(),
-        minute =
-          date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-      return year + "-" + mouth + "-" + day + " " + hour + ":" + minute;
+      return comm.formatDateV2(res);
     }
   }
 };

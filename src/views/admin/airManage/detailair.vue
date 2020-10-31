@@ -67,6 +67,7 @@
 </template>
 <script>
 import api from "./airUrl";
+import comm from '@/components/comm/comm'
 export default {
   data() {
     return {
